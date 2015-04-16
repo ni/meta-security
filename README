@@ -10,22 +10,22 @@ Dependencies
 This layer depends on:
 
   URI: git://git.openembedded.org/openembedded-core
-  branch: master
+  branch: fido
   revision: HEAD
   prio: default
 
   URI: git://git.openembedded.org/meta-openembedded/meta-oe
-  branch: master
+  branch: fido
   revision: HEAD
   prio: default
 
   URI: git://git.openembedded.org/meta-openembedded/meta-perl
-  branch: master
+  branch: fido
   revision: HEAD
   prio: default
 
   URI: git://git.openembedded.org/meta-openembedded/meta-networking
-  branch: master
+  branch: fido
   revision: HEAD
   prio: default
 
@@ -260,8 +260,8 @@ Send pull requests, patches, comments or questions to yocto@yoctoproject.org
 When sending single patches, please using something like:
 'git send-email -1 --to yocto@yoctoproject.org --subject-prefix=meta-security][PATCH'
 
-Maintainers:    Saul Wold <sgw@linux.intel.com>
-                Armin Kuster <akuster@mvista.com>
+Branch Maintainers:    Saul Wold <sgw@linux.intel.com>
+           Armin Kuster <akuster@mvista.com>
 
 
 License
