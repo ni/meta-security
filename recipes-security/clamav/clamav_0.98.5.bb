@@ -7,7 +7,7 @@ DEPENDS = "libtool db openssl zlib ncurses bzip2 libmspack"
 
 LIC_FILES_CHKSUM = "file://COPYING.LGPL;beginline=2;endline=3;md5=4b89c05acc71195e9a06edfa2fa7d092"
 
-SRC_URI = "${DEBIAN_MIRROR}/main/c/${BPN}/${BPN}_${PV}+dfsg.orig.tar.xz;name=archive \
+SRC_URI = "https://launchpad.net/debian/+archive/primary/+files/clamav_0.98.5%2Bdfsg.orig.tar.xz;name=archive \
     file://0001-Change-paths-in-sample-conf-file-to-match-Debian.patch \
     file://0002-Add-an-additional-n-after-the-number-in-the-pidfile.patch \
     file://0003-unit_tests-increment-test-timeout-from-40secs-to-5mi.patch \
