@@ -25,17 +25,14 @@ INITSCRIPT_PARAMS ?= "defaults"
 
 PACKAGECONFIG ??= ""
 
-# We have to unpack the tar ball twice to get to the source.
-# Also as soon as OE gets the tar ball it unpacks and
-# proceeds to apply the patches. But what you still have after
-# the first unpack is another tar ball. So we do a do_unpack_extra()
-# and tell OE to do the second unpack before do_patch(), otherwise
-# do_patch() will fail when trying to apply the patches.
-do_unpack_extra () {
-	cd ${WORKDIR}
-	tar -xzvf samhain-${PV}.tar.gz
+do_unpack_samhain() {
+    cd ${WORKDIR}
+    tar -xzvf samhain-${PV}.tar.gz
 }
-addtask unpack_extra after do_unpack before do_patch
+
+python do_unpack_append() {
+    bb.build.exec_func('do_unpack_samhain', d)
+}
 
 do_configure_prepend_arm() {
     export sh_cv___va_copy=yes
