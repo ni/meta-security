@@ -10,10 +10,10 @@ SRC_URI = "http://nmap.org/dist/${BP}.tar.bz2"
 SRC_URI[md5sum] = "0764f4dabe7cccda3c49fc3990b62a8a"
 SRC_URI[sha256sum] = "63df082a87c95a189865d37304357405160fc6333addcf5b84204c95e0539b04"
 
-inherit autotools-brokensep pkgconfig distro_features_check
+inherit autotools-brokensep pkgconfig python-dir distro_features_check
 
-PACKAGECONFIG = "ncat nping ndiff pcap"
-PACKAGECONFIG += " ${@bb.utils.contains("IMAGE_FEATURES", "x11-base", "zenmap", "", d)}"
+PACKAGECONFIG ?= "ncat nping ndiff pcap"
+PACKAGECONFIG += " ${@bb.utils.contains('IMAGE_FEATURES', 'x11-base', 'zenmap', '', d)}"
 
 PACKAGECONFIG[pcap] = "--with-pcap=linux, --without-pcap, libpcap, libpcap"
 PACKAGECONFIG[ssl] = "--with-openssl=${STAGING_LIBDIR}/.., --without-openssl, openssl, openssl"
@@ -38,19 +38,14 @@ do_configure() {
     oe_runconf
 }
 
+do_install_append () {
+   # remove python dir, its not used or installed
+   rm -fr ${D}/${libdir}
+}
 
-PACKAGES = "${PN} ${PN}-dbg ${PN}-doc"
+PACKAGES += "${@bb.utils.contains('PACKAGECONFIG', 'zenmap', '${PN}-zenmap', '', d)}"
 
-FILES_${PN} = "${bindir}/nmap ${datadir}/nmap/* ${bindir}/uninstall_ndiff"
-
-# append packages if enabled
-FILES_${PN} += "${@bb.utils.contains("PACKAGECONFIG", "ncat", "${bindir}/ncat ${target_datadir}/ncat", "", d)}"
-FILES_${PN} += "${@bb.utils.contains("PACKAGECONFIG", "nping", "${bindir}/nping", "", d)}"
-FILES_${PN} += "${@bb.utils.contains("PACKAGECONFIG", "ndiff", "${bindir}/ndiff ${libdir}/python${PYTHON_BASEVERSION}/site-packages/ndiff.py*", "", d)}"
-
-PACKAGES += "${@bb.utils.contains("PACKAGECONFIG", "zenmap", "${PN}-zenmap", "", d)}"
-
-FILES_${PN}-zenmap = "${@bb.utils.contains("PACKAGECONFIG", "zenmap", "${bindir}/*zenmap ${bindir}/xnmap ${datadir}/applications/*  ${bindir}/nmapfe ${datadir}/zenmap/* ${libdir}/python${PYTHON_BASEVERSION}/site-packages/radialnet/* ${libdir}/python${PYTHON_BASEVERSION}/site-packages/zenmap*", "", d)}"
+FILES_${PN}-zenmap = "${@bb.utils.contains("PACKAGECONFIG", "zenmap", "${bindir}/*zenmap ${bindir}/xnmap ${datadir}/applications/*  ${bindir}/nmapfe ${datadir}/zenmap/* ${PYTHON_SITEPACKAGES_DIR}/radialnet/* ${PYTHON_SITEPACKAGES_DIR}/zenmap*", "", d)}"
 
 RDEPENDS_${PN} = "python"
 RDEPENDS_${PN}-zenmap = "nmap"
