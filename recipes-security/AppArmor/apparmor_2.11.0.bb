@@ -104,6 +104,11 @@ do_install () {
 
 	install ${WORKDIR}/apparmor ${D}/${INIT_D_DIR}/apparmor
 	install ${WORKDIR}/functions ${D}/lib/apparmor
+	if [ "${VIRTUAL-RUNTIME_init_manager}" = "systemd" ]; then
+		install -d ${D}${systemd_system_unitdir}
+		install ${WORKDIR}/apparmor.service \
+			${D}${systemd_system_unitdir}
+	fi
 }
 
 do_compile_ptest () {
