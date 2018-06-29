@@ -7,7 +7,8 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/GPL-2.0;md5=801f80980d171dd6425610833a22dbe6"
 
 SRC_URI = "http://cirt.net/nikto/${BP}.tar.gz \
-           file://location.patch"
+           file://location.patch \
+           file://CVE-2018-11652.patch"
 
 SRC_URI[md5sum] = "efcc98a918becb77471ee9a5df0a7b1e"
 SRC_URI[sha256sum] = "0e672a6a46bf2abde419a0e8ea846696d7f32e99ad18a6b405736ee6af07509f"
