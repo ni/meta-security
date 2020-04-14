@@ -159,6 +159,8 @@ do_install_append () {
 	if [ -d ${D}${localstatedir}/run ]; then
 		rmdir ${D}${localstatedir}/run
 	fi
+
+	rm -rf ${D}${localstatedir}/log
 }
 
 FILES_${PN} += "${systemd_system_unitdir}"
