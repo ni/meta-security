@@ -151,3 +151,28 @@ qemux86-test:
   script:
   - kas build --target security-test-image kas/$CI_JOB_NAME.yml 
   - kas build -c testimage --target security-test-image kas/$CI_JOB_NAME.yml 
+
+qemux86-parsec:
+  extends: .build
+  script:
+  - kas build --target security-build-image kas/$CI_JOB_NAME.yml 
+
+qemux86-64-parsec:
+  extends: .build
+  script:
+  - kas build --target security-build-image kas/$CI_JOB_NAME.yml 
+
+qemuarm-parsec:
+  extends: .build
+  script:
+  - kas build --target security-build-image kas/$CI_JOB_NAME.yml 
+
+qemuarm-64-parsec:
+  extends: .build
+  script:
+  - kas build --target security-build-image kas/$CI_JOB_NAME.yml 
+
+qemuppc-parsec:
+  extends: .build
+  script:
+  - kas build --target security-build-image kas/$CI_JOB_NAME.yml 
