@@ -7,8 +7,7 @@ inherit cargo
 SRC_URI += "crate://crates.io/parsec-tool/${PV} \
 "
 
-DEPENDS = "clang-native"
-INSANE_SKIP_${PN} += "dev-deps"
+TOOLCHAIN = "clang"
 
 do_install() {
   install -d ${D}/${bindir}
