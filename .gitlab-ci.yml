@@ -27,18 +27,18 @@ qemux86:
   extends: .build
   script:
   - kas build --target security-build-image kas/$CI_JOB_NAME.yml
-  - kas build --target integrity-image-minimal kas/$CI_JOB_NAME-ima.yml
-  - kas build --target harden-image-minimal kas/$CI_JOB_NAME-harden.yml
-  - kas build --target security-build-image kas/$CI_JOB_NAME-comp.yml
   - kas build --target security-build-image kas/$CI_JOB_NAME-parsec.yml
+  - kas build --target security-build-image kas/$CI_JOB_NAME-comp.yml
+  - kas build --target harden-image-minimal kas/$CI_JOB_NAME-harden.yml
+  - kas build --target integrity-image-minimal kas/$CI_JOB_NAME-ima.yml
 
 qemux86-64:
   extends: .build
   script:
   - kas build --target security-build-image kas/$CI_JOB_NAME.yml
-  - kas build --target integrity-image-minimal kas/$CI_JOB_NAME-ima.yml
-  - kas build --target dm-verity-image-initramfs kas/$CI_JOB_NAME-dm-verify.yml
   - kas build --target security-build-image kas/$CI_JOB_NAME-parsec.yml
+  - kas build --target dm-verity-image-initramfs kas/$CI_JOB_NAME-dm-verify.yml
+  - kas build --target integrity-image-minimal kas/$CI_JOB_NAME-ima.yml
 
 qemuarm:
   extends: .build
@@ -50,8 +50,8 @@ qemuarm64:
   extends: .build
   script:
   - kas build --target security-build-image kas/$CI_JOB_NAME.yml
-  - kas build --target integrity-image-minimal kas/$CI_JOB_NAME-ima.yml
   - kas build --target security-build-image kas/$CI_JOB_NAME-parsec.yml
+  - kas build --target integrity-image-minimal kas/$CI_JOB_NAME-ima.yml
 
 qemuppc:
   extends: .build
