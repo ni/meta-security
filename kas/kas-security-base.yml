@@ -14,7 +14,7 @@ repos:
 
   poky:
     url: https://git.yoctoproject.org/git/poky
-    refspec: master
+    refspec: hardknott
     layers:
       meta:
       meta-poky:
@@ -22,7 +22,7 @@ repos:
 
   meta-openembedded:
     url: http://git.openembedded.org/meta-openembedded
-    refspec: master
+    refspec: hardknott
     layers:
       meta-oe:
       meta-perl:
@@ -41,8 +41,6 @@ local_conf_header:
     INHERIT += "report-error"
     INHERIT += "testimage"
     INHERIT += "rm_work"
-    BB_NUMBER_THREADS="24"
-    BB_NUMBER_PARSE_THREADS="12"
     BB_TASK_NICE_LEVEL = '5'
     BB_TASK_NICE_LEVEL_task-testimage = '0'
     BB_TASK_IONICE_LEVEL = '2.7'
