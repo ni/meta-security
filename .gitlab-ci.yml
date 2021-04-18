@@ -1,3 +1,11 @@
+.before-my-script: &before-my-script
+    - echo "$ERR_REPORT_USERNAME" > ~/.oe-send-error
+    - echo "$ERR_REPORT_EMAIL" >> ~/.oe-send-error
+    - export PATH=~/.local/bin:$PATH
+    - wget https://bootstrap.pypa.io/get-pip.py
+    - python3 get-pip.py
+    - python3 -m pip install kas
+
 .after-my-script: &after-my-script
     - cd $CI_PROJECT_DIR/poky
     - . ./oe-init-build-env $CI_PROJECT_DIR/build
@@ -8,7 +16,6 @@
 
 
 stages:
-  - .pre
   - build
   - parsec
   - multi
@@ -16,43 +23,45 @@ stages:
   - musl
   - test
 
-.pre:
-  stage: .pre 
-    - echo "$ERR_REPORT_USERNAME" > ~/.oe-send-error
-    - echo "$ERR_REPORT_EMAIL" >> ~/.oe-send-error
-    - export PATH=~/.local/bin:$PATH
-    - wget https://bootstrap.pypa.io/get-pip.py
-    - python3 get-pip.py
-    - python3 -m pip install kas
-    - rm -fr $CI_PROJECT_DIR/build
-
 .build:
+  before_script:
+    - *before-my-script
   stage: build
   after_script:
     - *after-my-script
 
 .parsec:
+  before_script:
+    - *before-my-script
   stage: parsec 
   after_script:
     - *after-my-script
 
 
 .multi:
+  before_script:
+    - *before-my-script
   stage: multi
   after_script:
     - *after-my-script
 
 .alt:
+  before_script:
+    - *before-my-script
   stage: alt
   after_script:
     - *after-my-script
 
 .musl:
+  before_script:
+    - *before-my-script
   stage: musl
   after_script:
     - *after-my-script
 
 .test:
+  before_script:
+    - *before-my-script
   stage: test 
   after_script:
     - *after-my-script
