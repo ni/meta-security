@@ -1,27 +1,83 @@
 stages:
+  - .pre
   - build
+  - parsec
+  - multi
+  - alt 
+  - musl
+  - test
 
-.build:
-  stage: build
-  image: crops/poky
-  before_script:
+.pre:
+  stage: .pre 
     - echo "$ERR_REPORT_USERNAME" > ~/.oe-send-error
     - echo "$ERR_REPORT_EMAIL" >> ~/.oe-send-error
     - export PATH=~/.local/bin:$PATH
     - wget https://bootstrap.pypa.io/get-pip.py
     - python3 get-pip.py
     - python3 -m pip install kas
+    - rm -fr $CI_PROJECT_DIR/build
+
+.build:
+  stage: build
   after_script:
     - cd $CI_PROJECT_DIR/poky
     - . ./oe-init-build-env $CI_PROJECT_DIR/build
     - for x in `ls $CI_PROJECT_DIR/build/tmp/log/error-report/ | grep error_report_`; do
     - send-error-report -y tmp/log/error-report/$x
     - done
-    - cd $CI_PROJECT_DIR
-    - rm -rf build
-  cache:
-    paths:
-      - layers
+    - rm -fr $CI_PROJECT_DIR/build
+
+.parsec:
+  stage: parsec 
+  after_script:
+    - cd $CI_PROJECT_DIR/poky
+    - . ./oe-init-build-env $CI_PROJECT_DIR/build
+    - for x in `ls $CI_PROJECT_DIR/build/tmp/log/error-report/ | grep error_report_`; do
+    - send-error-report -y tmp/log/error-report/$x
+    - done
+    - rm -fr $CI_PROJECT_DIR/build
+
+
+.multi:
+  stage: multi
+  after_script:
+    - cd $CI_PROJECT_DIR/poky
+    - . ./oe-init-build-env $CI_PROJECT_DIR/build
+    - for x in `ls $CI_PROJECT_DIR/build/tmp/log/error-report/ | grep error_report_`; do
+    - send-error-report -y tmp/log/error-report/$x
+    - done
+    - rm -fr $CI_PROJECT_DIR/build
+
+.alt:
+  stage: alt
+  after_script:
+    - cd $CI_PROJECT_DIR/poky
+    - . ./oe-init-build-env $CI_PROJECT_DIR/build
+    - for x in `ls $CI_PROJECT_DIR/build/tmp/log/error-report/ | grep error_report_`; do
+    - send-error-report -y tmp/log/error-report/$x
+    - done
+    - rm -fr $CI_PROJECT_DIR/build
+
+.musl:
+  stage: musl
+  after_script:
+    - cd $CI_PROJECT_DIR/poky
+    - . ./oe-init-build-env $CI_PROJECT_DIR/build
+    - for x in `ls $CI_PROJECT_DIR/build/tmp/log/error-report/ | grep error_report_`; do
+    - send-error-report -y tmp/log/error-report/$x
+    - done
+    - rm -fr $CI_PROJECT_DIR/build
+
+.test:
+  stage: test 
+  after_script:
+    - cd $CI_PROJECT_DIR/poky
+    - . ./oe-init-build-env $CI_PROJECT_DIR/build
+    - for x in `ls $CI_PROJECT_DIR/build/tmp/log/error-report/ | grep error_report_`; do
+    - send-error-report -y tmp/log/error-report/$x
+    - done
+    - rm -fr $CI_PROJECT_DIR/build
+
 
 qemux86:
   extends: .build
@@ -68,55 +124,54 @@ qemuriscv64:
   - kas build --target security-build-image kas/$CI_JOB_NAME.yml
 
 qemuarm64-alt:
-  extends: .build
+  extends: .alt
   script:
   - kas build --target security-build-image kas/$CI_JOB_NAME.yml
 
 qemuarm64-multi:
-  extends: .build
+  extends: .multi
   script:
   - kas build --target security-build-image kas/$CI_JOB_NAME.yml
 
 qemumips64-alt:
-  extends: .build
+  extends: .alt
   script:
   - kas build --target security-build-image kas/$CI_JOB_NAME.yml
 
 qemumips64-multi:
-  extends: .build
+  extends: .multi
   script:
   - kas build --target security-build-image kas/$CI_JOB_NAME.yml
 
 qemux86-64-alt:
-  extends: .build
+  extends: .alt
   script:
   - kas build --target security-build-image kas/$CI_JOB_NAME.yml
 
 qemux86-64-multi:
-  extends: .build
+  extends: .multi
   script:
   - kas build --target security-build-image kas/$CI_JOB_NAME.yml
 
 qemux86-musl:
-  extends: .build
+  extends: .musl
   script:
   - kas build --target security-build-image kas/$CI_JOB_NAME.yml
 
 qemuarm64-musl:
-  extends: .build
+  extends: .musl
   script:
   - kas build --target security-build-image kas/$CI_JOB_NAME.yml
 
 qemux86-test:
-  extends: .build
+  extends: .test
   allow_failure: true
   script:
   - kas build --target security-test-image kas/$CI_JOB_NAME.yml
   - kas build -c testimage --target security-test-image kas/$CI_JOB_NAME.yml
 
-
 parsec:
-  extends: .build
+  extends: .parsec
   script:
   - kas build --target security-build-image kas/qemuarm-$CI_JOB_NAME.yml
   - kas build --target security-build-image kas/qemuarm64-$CI_JOB_NAME.yml
