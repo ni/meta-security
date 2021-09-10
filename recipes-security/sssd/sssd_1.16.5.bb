@@ -22,6 +22,7 @@ SRC_URI = "https://releases.pagure.org/SSSD/${BPN}/${BP}.tar.gz \
            file://0001-build-Don-t-use-AC_CHECK_FILE-when-building-manpages.patch \
            file://0001-nss-Collision-with-external-nss-symbol.patch \
            file://0002-Provide-missing-defines-which-otherwise-are-availabl.patch \
+           file://CVE-2021-3621.patch \
            "
 
 SRC_URI[sha256sum] = "2e1a7bf036b583f686d35164f2d79bdf4857b98f51fe8b0d17aa0fa756e4d0c0"
