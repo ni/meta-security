@@ -8,7 +8,7 @@ DEPENDS += "gperf-native"
 
 SRCREV = "4bf70431a339a2886ab8c82e9a45378f30c6e6c7"
 
-SRC_URI = "git://github.com/seccomp/libseccomp.git;branch=release-2.5 \
+SRC_URI = "git://github.com/seccomp/libseccomp.git;branch=release-2.5;protocol=https \
            file://run-ptest \
            "
 

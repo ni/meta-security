@@ -10,7 +10,7 @@ DEPENDS = "libtasn1 coreutils-native expect socat glib-2.0 net-tools-native libt
 DEPENDS_append = " tpm-tools-native expect-native socat-native python3-pip-native python3-cryptography-native"
 
 SRCREV = "e59c0c1a7b4c8d652dbb280fd6126895a7057464"
-SRC_URI = "git://github.com/stefanberger/swtpm.git;branch=stable-0.5 \
+SRC_URI = "git://github.com/stefanberger/swtpm.git;branch=stable-0.5;protocol=https \
            file://ioctl_h.patch \
            file://oe_configure.patch \
            "

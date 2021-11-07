@@ -10,7 +10,7 @@ LIC_FILES_CHKSUM = "file://COPYING.txt;beginline=2;endline=3;md5=f7029fbbc5898b2
 
 SRCREV = "5553a5e206ceae5d920368baee7d403f823bcb6f"
 
-SRC_URI = "git://github.com/vrtadmin/clamav-devel;branch=dev/0.104 \
+SRC_URI = "git://github.com/vrtadmin/clamav-devel;branch=dev/0.104;protocol=https \
     file://clamd.conf \
     file://freshclam.conf \
     file://volatiles.03_clamav \

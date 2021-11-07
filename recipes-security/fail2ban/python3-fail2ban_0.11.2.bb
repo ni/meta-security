@@ -10,7 +10,7 @@ LICENSE = "GPL-2.0"
 LIC_FILES_CHKSUM = "file://COPYING;md5=ecabc31e90311da843753ba772885d9f"
 
 SRCREV ="eea1881b734b73599a21df2bfbe58b11f78d0a46"
-SRC_URI = " git://github.com/fail2ban/fail2ban.git;branch=0.11 \
+SRC_URI = " git://github.com/fail2ban/fail2ban.git;branch=0.11;protocol=https \
         file://initd \
         file://fail2ban_setup.py \
         file://run-ptest \

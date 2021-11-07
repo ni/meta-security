@@ -8,7 +8,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 S = "${WORKDIR}/git"
 
 SRCREV = "95ba5b8504152a1f820bbe679ccf03668cb5118f"
-SRC_URI = "git://github.com/secdev/scapy.git \
+SRC_URI = "git://github.com/secdev/scapy.git;branch=master;protocol=https \
            file://run-ptest"
 
 S = "${WORKDIR}/git"
