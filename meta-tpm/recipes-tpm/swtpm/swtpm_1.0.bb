@@ -11,7 +11,7 @@ DEPENDS += "tpm-tools-native expect-native socat-native"
 RDEPENDS_${PN} += "tpm-tools"
 
 SRCREV = "4f4f2f0a7e3195f6df8d235d58630a08e69403d8"
-SRC_URI = "git://github.com/stefanberger/swtpm.git \
+SRC_URI = "git://github.com/stefanberger/swtpm.git;protocol=https \
            file://fix_lib_search_path.patch \
            file://fix_fcntl_h.patch \
            file://ioctl_h.patch \

@@ -12,7 +12,7 @@ LIC_FILES_CHKSUM = "file://${S}/LICENSE;md5=500b2e742befc3da00684d8a1d5fd9da"
 DEPENDS += "autoconf-archive dbus glib-2.0 pkgconfig tpm2.0-tss glib-2.0-native"
 
 SRC_URI = "\
-    git://github.com/01org/tpm2-abrmd.git \
+    git://github.com/01org/tpm2-abrmd.git;protocol=https \
     file://tpm2-abrmd-init.sh \
     file://tpm2-abrmd.default \
 "

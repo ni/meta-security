@@ -6,7 +6,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;beginline=0;endline=1;md5=8eac08d22113880357c
 
 SRCREV = "74b190e1aa05f07da0c61fb9a30dbc9c18ce2c9d"
 
-SRC_URI = "git://github.com/seccomp/libseccomp.git;branch=release-2.3 \
+SRC_URI = "git://github.com/seccomp/libseccomp.git;branch=release-2.3;protocol=https \
            file://run-ptest \
 "
 

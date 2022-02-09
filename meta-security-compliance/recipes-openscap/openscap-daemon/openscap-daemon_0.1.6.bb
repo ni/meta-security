@@ -9,7 +9,7 @@ LICENSE = "LGPL-2.1"
 DEPENDS = "python3-dbus"
 
 SRCREV = "3fd5c75a08223de35a865d026d2a6980ec9c1d74"
-SRC_URI = "git://github.com/OpenSCAP/openscap-daemon.git"
+SRC_URI = "git://github.com/OpenSCAP/openscap-daemon.git;protocol=https"
 
 PV = "0.1.6+git${SRCPV}"
 

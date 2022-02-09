@@ -9,7 +9,7 @@ DEPENDS = "autoconf-archive pkgconfig"
 SRCREV = "b1d9ece8c6bea2e3043943b2edfaebcdca330c38"
 
 SRC_URI = " \
-    git://github.com/tpm2-software/tpm2-tss.git;branch=1.x \
+    git://github.com/tpm2-software/tpm2-tss.git;branch=1.x;protocol=https \
     file://ax_pthread.m4 \
 "
 

@@ -4,7 +4,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=97e5eea8d700d76b3ddfd35c4c96485f"
 
 SRCREV = "3388d45082bdc588c6fc0672f44d6d7d0aaa86ff"
 SRC_URI = " \
-	git://github.com/stefanberger/libtpms.git \
+	git://github.com/stefanberger/libtpms.git;protocol=https \
 	"
 
 S = "${WORKDIR}/git"
