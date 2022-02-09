@@ -10,7 +10,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
 SRCREV = "e4c4d0984dee2531897e13c32a18d5e54a2a4aa6"
-SRC_URI = "git://github.com/google/fscryptctl.git"
+SRC_URI = "git://github.com/google/fscryptctl.git;protocol=https"
 
 S = "${WORKDIR}/git"
 

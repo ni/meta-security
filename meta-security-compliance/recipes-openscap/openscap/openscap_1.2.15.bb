@@ -12,7 +12,7 @@ DEPENDS = "autoconf-archive pkgconfig gconf procps curl libxml2 rpm \
 DEPENDS_class-native = "autoconf-archive-native pkgconfig-native swig-native curl-native libxml2-native libxslt-native dpkg-native libgcrypt-native nss-native"
 
 SRCREV = "240930d42611983c65ecae16dbca3248ce130921"
-SRC_URI = "git://github.com/akuster/openscap.git;branch=oe \
+SRC_URI = "git://github.com/akuster/openscap.git;branch=oe;protocol=https \
            file://crypto_pkgconfig.patch \
            file://run-ptest \
 "

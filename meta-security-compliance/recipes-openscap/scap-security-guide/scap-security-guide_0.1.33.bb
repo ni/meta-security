@@ -9,7 +9,7 @@ LICENSE = "LGPL-2.1"
 DEPENDS = "openscap-native"
 
 SRCREV = "423d9f40021a03abd018bef7818a3a9fe91a083c"
-SRC_URI = "git://github.com/akuster/scap-security-guide.git;branch=oe;"
+SRC_URI = "git://github.com/akuster/scap-security-guide.git;branch=oe;;protocol=https"
 
 inherit cmake
 

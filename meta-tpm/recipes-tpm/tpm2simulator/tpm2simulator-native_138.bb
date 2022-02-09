@@ -5,7 +5,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=1415f7be284540b81d9d28c67c1a6b8b"
 DEPENDS = "python"
 
 SRCREV = "e45324eba268723d39856111e7933c5c76238481"
-SRC_URI = "git://github.com/stwagnr/tpm2simulator.git"
+SRC_URI = "git://github.com/stwagnr/tpm2simulator.git;protocol=https"
 
 S = "${WORKDIR}/git"
 OECMAKE_SOURCEPATH = "${S}/cmake"
