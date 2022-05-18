@@ -8,7 +8,7 @@ DEPENDS = "bison-native libpcre"
 SRC_URI = "https://github.com/aide/aide/releases/download/v${PV}/${BPN}-${PV}.tar.gz \
            file://aide.conf"
 
-SRC_URI[sha256sum] = "a2eb1883cafaad056fbe43ee1e8ae09fd36caa30a0bc8edfea5d47bd67c464f8"
+SRC_URI[sha256sum] = "c81505246f3ffc2e76036d43a77212ae82895b5881d9b9e25c1361b1a9b7a846"
 
 inherit autotools pkgconfig
 
