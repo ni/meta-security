@@ -87,7 +87,7 @@ python __anonymous() {
     if verity_image != pn:
         return # This doesn't concern this image
 
-    if len(verity_type.split()) is not 1:
+    if len(verity_type.split()) != 1:
         bb.fatal('DM_VERITY_IMAGE_TYPE must contain exactly one type')
 
     d.appendVar('IMAGE_FSTYPES', ' %s.verity' % verity_type)
