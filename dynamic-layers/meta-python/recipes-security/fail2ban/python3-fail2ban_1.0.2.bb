@@ -11,11 +11,11 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=ecabc31e90311da843753ba772885d9f"
 
 DEPENDS = "python3-native"
 
-SRCREV ="4fe4ac8dde6ba14841da598ec37f8c6911fe0f64"
-SRC_URI = " git://github.com/fail2ban/fail2ban.git;branch=0.11;protocol=https \
-        file://initd \
-        file://run-ptest \
-"
+SRCREV = "e1d3006b0330e9777705a7baafe3989d442ed120"
+SRC_URI = "git://github.com/fail2ban/fail2ban.git;branch=master;protocol=https \
+           file://initd \
+           file://run-ptest \
+           "
 
 UPSTREAM_CHECK_GITTAGREGEX = "(?P<pver>\d+(\.\d+)+)"
 
