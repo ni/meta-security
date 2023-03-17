@@ -9,7 +9,7 @@ seccomp-bpf and Linux capabilities."
 LIC_FILES_CHKSUM = "file://COPYING;md5=b234ee4d69f5fce4486a80fdaf4a4263"
 LICENSE = "GPL-2.0-only"
 
-SRCREV = "b4b08d21cd95725c9d55dfdb6987fcc6d7893247"
+SRCREV = "2551bc71f14052344666f3ca2ad67f5b798020b9"
 SRC_URI = "git://github.com/netblue30/firejail.git;protocol=https;branch=master \
            file://exclude_seccomp_util_compiles.patch \
            "
@@ -46,6 +46,7 @@ PACKAGES:append = " ${PN}-vim ${PN}-zsh"
 
 FILES:${PN}-vim = "${datadir}/vim/"
 FILES:${PN}-zsh = "${datadir}/zsh/"
+FILES:${PN}-dev = "${datadir}/gtksourceview-5/"
 
 pkg_postinst_ontarget:${PN} () {
     ${libdir}/${BPN}/fseccomp default ${libdir}/${BPN}/seccomp
