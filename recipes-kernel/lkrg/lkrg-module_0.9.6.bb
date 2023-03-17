@@ -11,7 +11,7 @@ DEPENDS = "virtual/kernel elfutils"
 
 SRC_URI = "git://github.com/lkrg-org/lkrg.git;protocol=https;branch=main"
 
-SRCREV = "c58cb52145b8e8ccc6bd19079f5c835933281cdc"
+SRCREV = "2481b3e2dd04eac945c31f99058b0aeee73c3a71"
 
 S = "${WORKDIR}/git"
 
