@@ -6,7 +6,7 @@ LICENSE = "AGPL-3.0-only"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=c0acfa7a8a03b718abee9135bc1a1c55"
 
 PYPI_PACKAGE = "privacyIDEA"
-SRC_URI[sha256sum] = "187b6aa61f8b27e1972512123c8295ea6d2501b3d90d975d4603e753f146b50c"
+SRC_URI[sha256sum] = "e0dae763575c6300ccaebe6dcc8d3f119cb3e25c11302b1e78a96a12e8ab2b38"
 
 inherit pypi setuptools3
 
