@@ -11,7 +11,7 @@ LIC_FILES_CHKSUM = "file://src/${GO_IMPORT}/LICENSE;md5=3b83ef96387f14655fc854dd
 # fscrypt depends on go and libpam
 DEPENDS += "go-native libpam"
 
-SRCREV = "92b1e9a8670ccd3916a7d24a06cab1e4c9815bc4"
+SRCREV = "7c80c73c084ce9ea49a03b814dac7a82fd7b4c23"
 SRC_URI = "git://github.com/google/fscrypt.git;branch=master;protocol=https"
 
 GO_IMPORT = "import"
