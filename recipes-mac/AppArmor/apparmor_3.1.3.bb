@@ -14,15 +14,14 @@ LIC_FILES_CHKSUM = "file://${S}/LICENSE;md5=fd57a4b0bc782d7b80fd431f10bbf9d0"
 DEPENDS = "bison-native apr gettext-native coreutils-native swig-native"
 
 SRC_URI = " \
-    git://gitlab.com/apparmor/apparmor.git;protocol=https;branch=apparmor-3.0 \
+    git://gitlab.com/apparmor/apparmor.git;protocol=https;branch=apparmor-3.1 \
     file://run-ptest \
     file://crosscompile_perl_bindings.patch \
     file://0001-Makefile.am-suppress-perllocal.pod.patch \
     file://0001-Makefile-fix-hardcoded-installation-directories.patch \
-    file://0001-rc.apparmor.debian-add-missing-functions.patch \
     "
 
-SRCREV = "0ead606d9e608801f45e13a34358036135470729"
+SRCREV = "e69cb5047946818e6a9df326851483bb075a5cfe"
 S = "${WORKDIR}/git"
 
 PARALLEL_MAKE = ""
@@ -95,7 +94,7 @@ do_install () {
 
     if ${@bb.utils.contains('DISTRO_FEATURES','sysvinit','true','false',d)}; then
         install -d ${D}${sysconfdir}/init.d
-        install -m 755 ${B}/parser/rc.apparmor.debian ${D}${sysconfdir}/init.d/apparmor
+        install -m 755 ${B}/parser/rc.apparmor.functions ${D}${sysconfdir}/init.d/apparmor
     fi
 
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
