@@ -7,7 +7,7 @@ DEPENDS = "openssl"
 
 # SRC_URI += "crate://crates.io/krill/0.9.1"
 SRC_URI = "git://github.com/NLnetLabs/krill.git;protocol=https;branch=main"
-SRCREV = "95e6681d5b4024cac7a1892d47fb76abc68f34fb"
+SRCREV = "e92098419c7ad82939e0483bc76df21eff705b80"
 SRC_URI += "file://panic_workaround.patch"
 
 include krill.inc
