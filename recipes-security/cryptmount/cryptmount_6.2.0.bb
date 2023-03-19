@@ -1,12 +1,10 @@
 SUMMARY = "Linux encrypted filesystem management tool"
 HOMEPAGE = "http://cryptmount.sourceforge.net/"
-LIC_FILES_CHKSUM = "file://README;beginline=3;endline=4;md5=dae0772f0ff46fd927e7fdb08af51b71"
+LIC_FILES_CHKSUM = "file://COPYING;beginline=1;endline=4;md5=6e69c425bf32ecf9b1e11d29d146d03d"
 LICENSE = "GPL-2.0-only"
+SRC_URI = "https://sourceforge.net/projects/cryptmount/files/${BPN}/${BPN}-6.2/${BPN}-${PV}.tar.gz"
 
-SRC_URI = "https://sourceforge.net/projects/cryptmount/files/${BPN}/${BPN}-${PV}/${BPN}-${PV}.tar.gz \
-           "
-
-SRC_URI[sha256sum] = "86528a9175e1eb53f60613e3c3ea6ae6d69dbfe5ac2b53b2f58ba0f768371e7e"
+SRC_URI[sha256sum] = "90cc49fd598d636929c70479b1305f12b011edadf4a54578ace6c0fca8cb5ed2"
 
 inherit autotools-brokensep gettext pkgconfig systemd
 
