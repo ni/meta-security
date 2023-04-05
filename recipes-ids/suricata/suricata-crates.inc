@@ -26,6 +26,7 @@ SRC_URI += " \
     crate://crates.io/rusticata-macros/2.1.0;name=rusticata-macros-2.1.0 \
     crate://crates.io/miniz_oxide/0.4.4;name=miniz_oxide-0.4.4 \
     crate://crates.io/num-bigint/0.2.6;name=num-bigint-0.2.6 \
+    crate://crates.io/num-bigint/0.3.1;name=num-bigint-0.3.1 \
     crate://crates.io/num-complex/0.2.4;name=num-complex-0.2.4 \
     crate://crates.io/num-integer/0.1.44;name=num-integer-0.1.44 \
     crate://crates.io/num-iter/0.1.42;name=num-iter-0.1.42 \
@@ -719,4 +720,5 @@ SRC_URI[time-0.1.44.sha256sum] = "6db9e6914ab8b1ae1c260a4ae7a49b6c5611b40328a735
 SRC_URI[num-traits-0.1.43.sha256sum] = "92e5113e9fd4cc14ded8e499429f396a20f98c772a47cc8622a736e1ec843c31"
 SRC_URI[wasi-0.10.0+wasi-snapshot-preview1.sha256sum] = "1a143597ca7c7793eff794def352d41792a93c481eb1042423ff7ff72ba2c31f"
 SRC_URI[lexical-core-0.6.8.sha256sum] = "233853dfa6b87c7c00eb46a205802069263ab27e16b6bdd1b08ddf91a855e30c"
+SRC_URI[num-bigint-0.3.1.sha256sum] = "5e9a41747ae4633fce5adffb4d2e81ffc5e89593cb19917f8fb2cc5ff76507bf"
 
