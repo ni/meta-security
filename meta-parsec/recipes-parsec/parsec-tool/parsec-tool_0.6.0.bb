@@ -1,11 +1,13 @@
 SUMMARY = "Parsec Command Line Interface"
 HOMEPAGE = "https://github.com/parallaxsecond/parsec-tool"
 LICENSE = "Apache-2.0"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
-inherit cargo
+inherit cargo cargo-update-recipe-crates
 
 SRC_URI += "crate://crates.io/parsec-tool/${PV} \
 "
+SRC_URI[parsec-tool.sha256sum] = "f51d5d7f0caca1c335324b52482fa5edbf6c9cfd2e6865e5cb22716d52dcb367"
 
 RDEPENDS:${PN} = "openssl-bin"
 
@@ -15,9 +17,9 @@ do_install() {
   install -m 755 "${S}/tests/parsec-cli-tests.sh" "${D}${bindir}/parsec-cli-tests.sh"
 }
 
-require parsec-tool_${PV}.inc
+require parsec-tool-crates.inc
 
-# The QA check has been temporarily disabled. An issue has been created 
-# upstream to fix this. 
+# The QA check has been temporarily disabled. An issue has been created
+# upstream to fix this.
 # https://github.com/parallaxsecond/parsec-tool/issues/94
 INSANE_SKIP:${PN}-dbg += "buildpaths"

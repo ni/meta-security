@@ -1,15 +1,18 @@
 SUMMARY = "Platform AbstRaction for SECurity Daemon"
 HOMEPAGE = "https://github.com/parallaxsecond/parsec"
 LICENSE = "Apache-2.0"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=3b83ef96387f14655fc854ddc3c6bd57"
 
-inherit cargo pkgconfig
-DEPENDS = "clang-native"
+inherit cargo pkgconfig cargo-update-recipe-crates
+
+DEPENDS += "clang-native"
 
 SRC_URI += "crate://crates.io/parsec-service/${PV} \
             file://parsec_init \
             file://systemd.patch \
             file://parsec-tmpfiles.conf \
 "
+SRC_URI[parsec-service.sha256sum] = "f58e7ba859c22cc1904dc8298b1a7d94ee1ba3b4d4808f28e4cc0c96ddb149c9"
 
 PACKAGECONFIG ??= "PKCS11 MBED-CRYPTO"
 have_TPM = "${@bb.utils.contains('DISTRO_FEATURES', 'tpm2', 'TPM', '', d)}"
@@ -82,9 +85,10 @@ FILES:${PN} += " \
     ${sysconfdir}/init.d/parsec \
 "
 
-require parsec-service_${PV}.inc
+require parsec-service-crates.inc
 
-# The QA check has been temporarily disabled. An issue has been created 
-# upstream to fix this. 
+# The QA check has been temporarily disabled. An issue has been created
+# upstream to fix this.
 # https://github.com/parallaxsecond/parsec/issues/645
 INSANE_SKIP:${PN}-dbg += "buildpaths"
+
