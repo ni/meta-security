@@ -53,10 +53,10 @@ class ParsecTest(OERuntimeTestCase):
             self.assertIn("ID: 0x0%d (%s provider)" % (prov_id, provider),
                           output, msg='%s provider is not configured.' % provider)
 
-    def run_cli_tests(self, prov_id=None):
+    def run_cli_tests(self, prov_id=None, extra_params=""):
         """ Run Parsec CLI end-to-end tests against one or all providers """
 
-        status, output = self.target.run('parsec-cli-tests.sh %s' % ("-%d" % prov_id if prov_id else ""))
+        status, output = self.target.run('parsec-cli-tests.sh %s %s' % ("-%d" % prov_id if prov_id else "", extra_params))
         self.assertEqual(status, 0, msg='Parsec CLI tests failed.\n %s' % output)
 
     def check_packageconfig(self, prov):
@@ -181,7 +181,9 @@ class ParsecTest(OERuntimeTestCase):
             self.configure_pkcs11_provider()
             self.check_parsec_providers("PKCS #11", prov_id)
 
-        self.run_cli_tests(prov_id)
+        # Software PKCS11 we use for OE QA testing
+        # doesn't support RSA-OAEP(SHA256) encryption/decryption operations
+        self.run_cli_tests(prov_id, "--no-oaep")
         self.restore_parsec_config()
 
     def configure_TS_provider(self):
