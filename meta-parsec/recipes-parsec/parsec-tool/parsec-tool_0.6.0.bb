@@ -7,9 +7,9 @@ inherit cargo cargo-update-recipe-crates
 
 SRC_URI += "crate://crates.io/parsec-tool/${PV} \
 "
-SRC_URI[parsec-tool.sha256sum] = "f51d5d7f0caca1c335324b52482fa5edbf6c9cfd2e6865e5cb22716d52dcb367"
+SRC_URI[parsec-tool-0.6.0.sha256sum] = "f51d5d7f0caca1c335324b52482fa5edbf6c9cfd2e6865e5cb22716d52dcb367"
 
-RDEPENDS:${PN} = "openssl-bin"
+S = "${CARGO_VENDORING_DIRECTORY}/${BP}"
 
 do_install() {
   install -d ${D}/${bindir}
@@ -18,6 +18,8 @@ do_install() {
 }
 
 require parsec-tool-crates.inc
+
+RDEPENDS:${PN} = "openssl-bin"
 
 # The QA check has been temporarily disabled. An issue has been created
 # upstream to fix this.
