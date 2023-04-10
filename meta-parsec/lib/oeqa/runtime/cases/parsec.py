@@ -61,9 +61,18 @@ class ParsecTest(OERuntimeTestCase):
 
     def check_packageconfig(self, prov):
         """ Check that the require provider is included in Parsec """
-        if prov not in self.tc.td['PACKAGECONFIG:pn-parsec-service']:
+
+        if 'PACKAGECONFIG:pn-parsec-service' in self.tc.td.keys():
+            providers = self.tc.td['PACKAGECONFIG:pn-parsec-service']
+        else:
+            # PACKAGECONFIG is not defined in local.conf
+            # Let's use the default value
+            providers = "PKCS11 MBED-CRYPTO"
+            if 'tpm2' in self.tc.td['DISTRO_FEATURES']:
+                providers += " TPM"
+        if prov not in providers:
             self.skipTest('%s provider is not included in Parsec. Parsec PACKAGECONFIG: "%s"' % \
-                          (prov, self.tc.td['PACKAGECONFIG:pn-parsec-service']))
+                          (prov, providers))
 
     def check_packages(self, prov, packages):
         """ Check for the required packages for Parsec providers software backends """
