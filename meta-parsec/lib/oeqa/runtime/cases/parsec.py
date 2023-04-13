@@ -24,6 +24,10 @@ class ParsecTest(OERuntimeTestCase):
             self.parsec_status='pgrep -l parsec'
             self.parsec_reload='/etc/init.d/parsec reload'
 
+    def tearDown(self):
+        self.target.run('sync')
+        super(ParsecTest, self).tearDown()
+
     def copy_subconfig(self, cfg, provider):
         """ Copy a provider configuration to target and append it to Parsec config """
 
