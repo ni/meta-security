@@ -17,7 +17,7 @@ IMA_EVM_X509 ?= "${IMA_EVM_KEY_DIR}/x509_ima.der"
 # with a .x509 suffix. See linux-%.bbappend for details.
 #
 # ima-local-ca.x509 is what ima-gen-local-ca.sh creates.
-IMA_EVM_ROOT_CA ?= ""
+IMA_EVM_ROOT_CA ?= "${IMA_EVM_KEY_DIR}/ima-local-ca.pem"
 
 # Sign all regular files by default.
 IMA_EVM_ROOTFS_SIGNED ?= ". -type f"
@@ -30,6 +30,9 @@ IMA_EVM_ROOTFS_IVERSION ?= ""
 
 # Avoid re-generating fstab when ima is enabled.
 WIC_CREATE_EXTRA_ARGS:append = "${@bb.utils.contains('DISTRO_FEATURES', 'ima', ' --no-fstab-update', '', d)}"
+
+# Add necessary tools (e.g., keyctl) to image
+IMAGE_INSTALL:append = "${@bb.utils.contains('DISTRO_FEATURES', 'ima', ' ima-evm-utils', '', d)}"
 
 ima_evm_sign_rootfs () {
     cd ${IMAGE_ROOTFS}
