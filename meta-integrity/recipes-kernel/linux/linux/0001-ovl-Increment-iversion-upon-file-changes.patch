@@ -1,0 +1,42 @@
+From e9ed62e8d1d3eee7ffe862d9812c5320d3b9bd88 Mon Sep 17 00:00:00 2001
+From: Stefan Berger <stefanb@linux.ibm.com>
+Date: Thu, 6 Apr 2023 11:27:29 -0400
+Subject: [PATCH] ovl: Increment iversion upon file changes
+
+This is a temporary patch for kernels that do not implement
+STATX_CHANGE_COOKIE (<= 6.2). The successor patch will be this one:
+
+https://lore.kernel.org/linux-integrity/20230418-engste-gastwirtschaft-601fb389bba5@brauner/T/#m3bf84296fe9e6499abb6e3191693948add2ff459
+
+Increment the lower inode's iversion for IMA to be able to recognize
+changes to the file.
+
+Signed-off-by: Stefan Berger <stefanb@linux.ibm.com>
+---
+ fs/overlayfs/file.c | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/fs/overlayfs/file.c b/fs/overlayfs/file.c
+index 6011f955436b..1dfe5e7bfe1c 100644
+--- a/fs/overlayfs/file.c
++++ b/fs/overlayfs/file.c
+@@ -13,6 +13,7 @@
+ #include <linux/security.h>
+ #include <linux/mm.h>
+ #include <linux/fs.h>
++#include <linux/iversion.h>
+ #include "overlayfs.h"
+ 
+ struct ovl_aio_req {
+@@ -408,6 +409,8 @@ static ssize_t ovl_write_iter(struct kiocb *iocb, struct iov_iter *iter)
+ 		if (ret != -EIOCBQUEUED)
+ 			ovl_aio_cleanup_handler(aio_req);
+ 	}
++	if (ret > 0)
++		inode_maybe_inc_iversion(inode, false);
+ out:
+ 	revert_creds(old_cred);
+ out_fdput:
+-- 
+2.34.1
+
