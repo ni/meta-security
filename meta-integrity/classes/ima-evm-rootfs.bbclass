@@ -69,10 +69,10 @@ ima_evm_sign_rootfs () {
     find ${IMA_EVM_ROOTFS_HASHED} | xargs -d "\n" --no-run-if-empty --verbose evmctl ima_hash
 
     # Optionally install custom policy for loading by systemd.
-    if [ "${IMA_EVM_POLICY_SYSTEMD}" ]; then
+    if [ "${IMA_EVM_POLICY}" ]; then
         install -d ./${sysconfdir}/ima
         rm -f ./${sysconfdir}/ima/ima-policy
-        install "${IMA_EVM_POLICY_SYSTEMD}" ./${sysconfdir}/ima/ima-policy
+        install "${IMA_EVM_POLICY}" ./${sysconfdir}/ima/ima-policy
     fi
 }
 
