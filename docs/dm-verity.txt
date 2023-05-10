@@ -31,6 +31,8 @@ Kernel Configuration
 Kernel configuration for dm-verity happens automatically via IMAGE_CLASSES
 which will source features/device-mapper/dm-verity.scc when dm-verity-img
 is used. [See commit d9feafe991c]
+IMPORTANT: As per the top level README, you *must* put security in the
+DISTRO_FEATURES, or else you won't get the dm-verity kernel settings.
 
 Supported Platforms
 -------------------
