@@ -2,7 +2,6 @@ FILESEXTRAPATHS:append := "${THISDIR}/linux:"
 
 SRC_URI += " \
     ${@bb.utils.contains('DISTRO_FEATURES', 'ima', 'file://ima.scc', '', d)} \
-    file://0001-ovl-Increment-iversion-upon-file-changes.patch \
 "
 
 do_configure() {
