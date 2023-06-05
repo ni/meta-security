@@ -1,0 +1,80 @@
+From eb3865f2603fff2cc5d39d2379ba9f3857affca9 Mon Sep 17 00:00:00 2001
+From: Armin Kuster <akuster@mvista.com>
+Date: Sun, 4 Jun 2023 20:51:50 -0400
+Subject: [PATCH 2/2] openembedded: add Poky distro
+
+Signed-off-by: Armin Kuster <akuster@mvista.com>
+---
+ cpe/openscap-cpe-dict.xml             |  4 ++++
+ cpe/openscap-cpe-oval.xml             | 14 ++++++++++++++
+ src/OVAL/probes/unix/runlevel_probe.c |  8 +++++++-
+ 3 files changed, 25 insertions(+), 1 deletion(-)
+
+diff --git a/cpe/openscap-cpe-dict.xml b/cpe/openscap-cpe-dict.xml
+index 3338a9e55..f86b55864 100644
+--- a/cpe/openscap-cpe-dict.xml
++++ b/cpe/openscap-cpe-dict.xml
+@@ -57,5 +57,9 @@
+             <title xml:lang="en-us">OpenEmbedded all versions</title>
+             <check system="http://oval.mitre.org/XMLSchema/oval-definitions-5" href="openscap-cpe-oval.xml">oval:org.open-scap.cpe.openembedded:def:1</check>
+       </cpe-item>
++      <cpe-item name="cpe:/o:openembedded:poky">
++            <title xml:lang="en-us">Poky all versions</title>
++            <check system="http://oval.mitre.org/XMLSchema/oval-definitions-5" href="openscap-cpe-oval.xml">oval:org.open-scap.cpe.poky:def:1</check>
++      </cpe-item>
+ 
+ </cpe-list>
+diff --git a/cpe/openscap-cpe-oval.xml b/cpe/openscap-cpe-oval.xml
+index 2f3e25419..03d192333 100644
+--- a/cpe/openscap-cpe-oval.xml
++++ b/cpe/openscap-cpe-oval.xml
+@@ -835,6 +835,20 @@
+                         <criterion comment="OpenEmbedded is installed." test_ref="oval:org.open-scap.cpe.openembedded:tst:1" />
+                   </criteria>
+             </definition>
++            <definition class="inventory" id="oval:org.open-scap.cpe.poky:def:1" version="1" >
++                  <metadata>
++                        <title>Yocto Project Reference Distro</title>
++                        <affected family="unix">
++                            <platform>Poky Distro</platform>
++                        </affected>
++                        <reference ref_id="cpe:/o:openembedded:poky" source="CPE"/>
++                        <description>Yocto Project Reference Distro is installed</description>
++                  </metadata>
++                  <criteria>
++                        <criterion comment="Installed operating system is part of the unix family." test_ref="oval:org.open-scap.cpe.poky:tst:1" />
++                        <criterion comment="Yocto Project Reference Distro is installed." test_ref="oval:org.open-scap.cpe.poky:tst:1" />
++                  </criteria>
++            </definition>
+       </definitions>
+       <tests>
+             <rpmverifyfile_test check_existence="at_least_one_exists" id="oval:org.open-scap.cpe.rhel:tst:2" version="1" check="at least one" comment="/etc/redhat-release is provided by redhat-release package"
+diff --git a/src/OVAL/probes/unix/runlevel_probe.c b/src/OVAL/probes/unix/runlevel_probe.c
+index 00a5b85f6..ae6fc0c19 100644
+--- a/src/OVAL/probes/unix/runlevel_probe.c
++++ b/src/OVAL/probes/unix/runlevel_probe.c
+@@ -408,6 +408,11 @@ static int is_openembedded(void)
+ 	return parse_os_release("cpe:/o:openembedded:nodistro");
+ }
+ 
++static int is_poky(void)
++{
++	return parse_os_release("cpe:/o:openembedded:poky");
++}
++
+ static int is_common (void)
+ {
+         return (1);
+@@ -430,7 +435,8 @@ const distro_tbl_t distro_tbl[] = {
+         { &is_solaris,  &get_runlevel_redhat   },
+         { &is_wrlinux,  &get_runlevel_wrlinux  },
+         { &is_common,   &get_runlevel_common   },
+-        { &is_openembedded,  &get_runlevel_common  }
++        { &is_openembedded,  &get_runlevel_common  },
++        { &is_poky,     &get_runlevel_common  }
+ };
+ 
+ #define DISTRO_TBL_SIZE ((sizeof distro_tbl)/sizeof (distro_tbl_t))
+-- 
+2.25.1
+

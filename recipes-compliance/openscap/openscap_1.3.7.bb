@@ -11,7 +11,10 @@ DEPENDS:class-native = "pkgconfig-native swig-native curl-native libxml2-native 
 
 
 SRCREV = "55efbfda0f617e05862ab6ed4862e10dbee52b03"
-SRC_URI = "git://github.com/OpenSCAP/openscap.git;branch=maint-1.3;protocol=https"
+SRC_URI = "git://github.com/OpenSCAP/openscap.git;branch=maint-1.3;protocol=https \
+           file://0001-openscap-Add-openembedded.patch  \
+           file://0002-openembedded-add-Poky-distro.patch \
+           "
 
 S = "${WORKDIR}/git"
 
@@ -63,5 +66,7 @@ SYSTEMD_SERVICE:${PN} = "oscap-remediate.service"
 
 FILES:${PN} += "${PYTHON_SITEPACKAGES_DIR}"
 
-RDEPENDS:${PN} += "libxml2 python3-core libgcc bash"
+
+RDEPENDS:${PN} = "libxml2 python3-core libgcc bash"
+RDEPENDS:${PN}-class-target = "libxml2 python3-core libgcc bash os-release"
 BBCLASSEXTEND = "native"

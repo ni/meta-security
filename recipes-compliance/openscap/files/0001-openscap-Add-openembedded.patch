@@ -1,0 +1,128 @@
+From 8f8b580a882e9584e2b3726dab2c3f8e01cb885f Mon Sep 17 00:00:00 2001
+From: Armin Kuster <akuster808@gmail.com>
+Date: Sun, 4 Jun 2023 20:16:12 -0400
+Subject: [PATCH 1/2] openscap: Add openembedded
+
+Signed-off-by: Armin Kuster <akuste808r@gmail.com>
+
+Upstream-Status: Pending
+Signed-off-by: Armin Kuster <akuste808r@gmail.com>
+
+---
+ cpe/openscap-cpe-dict.xml             |  5 +++
+ cpe/openscap-cpe-oval.xml             | 45 +++++++++++++++++++++------
+ src/OVAL/probes/unix/runlevel_probe.c |  8 ++++-
+ 3 files changed, 47 insertions(+), 11 deletions(-)
+
+diff --git a/cpe/openscap-cpe-dict.xml b/cpe/openscap-cpe-dict.xml
+index 02d536189..3338a9e55 100644
+--- a/cpe/openscap-cpe-dict.xml
++++ b/cpe/openscap-cpe-dict.xml
+@@ -53,4 +53,9 @@
+             <title xml:lang="en-us">Fedora 35</title>
+             <check system="http://oval.mitre.org/XMLSchema/oval-definitions-5" href="openscap-cpe-oval.xml">oval:org.open-scap.cpe.fedora:def:35</check>
+       </cpe-item>
++      <cpe-item name="cpe:/o:openembedded:nodistro">
++            <title xml:lang="en-us">OpenEmbedded all versions</title>
++            <check system="http://oval.mitre.org/XMLSchema/oval-definitions-5" href="openscap-cpe-oval.xml">oval:org.open-scap.cpe.openembedded:def:1</check>
++      </cpe-item>
++
+ </cpe-list>
+diff --git a/cpe/openscap-cpe-oval.xml b/cpe/openscap-cpe-oval.xml
+index 64099400b..2f3e25419 100644
+--- a/cpe/openscap-cpe-oval.xml
++++ b/cpe/openscap-cpe-oval.xml
+@@ -821,6 +821,20 @@
+                         <criterion comment="Microsoft Windows Server 2016 is installed" test_ref="oval:org.open-scap.cpe.windows:tst:2016" />
+                   </criteria>
+             </definition>
++            <definition class="inventory" id="oval:org.open-scap.cpe.openembedded:def:1" version="1" >
++                  <metadata>
++                        <title>OpenEmbedded Org</title>
++                        <affected family="unix">
++                            <platform>OpenEmbedded Nodistro</platform>
++                        </affected>
++                        <reference ref_id="cpe:/o:openembedded:nodistro" source="CPE"/>
++                        <description>OpenEmbedded No Distro is installed</description>
++                  </metadata>
++                  <criteria>
++                        <criterion comment="Installed operating system is part of the unix family." test_ref="oval:org.open-scap.cpe.openembedded:tst:1" />
++                        <criterion comment="OpenEmbedded is installed." test_ref="oval:org.open-scap.cpe.openembedded:tst:1" />
++                  </criteria>
++            </definition>
+       </definitions>
+       <tests>
+             <rpmverifyfile_test check_existence="at_least_one_exists" id="oval:org.open-scap.cpe.rhel:tst:2" version="1" check="at least one" comment="/etc/redhat-release is provided by redhat-release package"
+@@ -1228,16 +1242,19 @@
+                   <key>SOFTWARE\Microsoft\Windows NT\CurrentVersion</key>
+                   <name>ProductName</name>
+             </registry_object>
+-            <textfilecontent54_object id="oval:org.open-scap.cpe.centos:obj:8" version="1" comment="Check os-release ID" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+-                  <filepath>/etc/os-release</filepath>
+-                  <pattern operation="pattern match">^ID=&quot;(\w+)&quot;$</pattern>
+-                  <instance datatype="int">1</instance>
+-            </textfilecontent54_object>
+-            <textfilecontent54_object id="oval:org.open-scap.cpe.centos:obj:8000" version="1" comment="Check os-release VERSION_ID" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+-                  <filepath>/etc/os-release</filepath>
+-                  <pattern operation="pattern match">^VERSION_ID=&quot;(\d)&quot;$</pattern>
+-                  <instance datatype="int">1</instance>
+-            </textfilecontent54_object>
++            <file_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#unix" version="1" id="oval:org.open-scap.cpe.openembedded-release:obj:1" >
++                <filepath>/etc/os-release</filepath>
++            </file_object>
++            <textfilecontent54_object
++                            id="oval:org.open-scap.cpe.openembedded-release:obj:1"
++                            comment="Check specification in /etc/os-release."
++                            version="1"
++                            xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent"
++                            >
++                <path>/etc</path>
++                <filename>os-release</filename>
++                <pattern operation="pattern match">^VERSION=.(\d*.\d*)</pattern>
++                <instance operation="greater than or equal" datatype="int">1</instance>
+       </objects>
+       <states>
+             <family_state id="oval:org.open-scap.cpe.unix:ste:1" version="1" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent">
+@@ -1455,5 +1472,13 @@
+             <registry_state id="oval:org.open-scap.cpe.windows:ste:2016" version="1" xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#windows">
+                   <value operation="pattern match">^.*2016.*$</value>
+             </registry_state>
++            <textfilecontent54_state
++                            id="oval:org.open-scap.cpe.openembedded-release:ste:1"
++                            comment="Check the /etc/os-release file for VERSION 4.2 specification."
++                            version="1"
++                            xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent"
++                            >
++                  <subexpression operation="pattern match">4.2</subexpression>
++            </textfilecontent54_state>
+       </states>
+ </oval_definitions>
+diff --git a/src/OVAL/probes/unix/runlevel_probe.c b/src/OVAL/probes/unix/runlevel_probe.c
+index 7a94b23fc..00a5b85f6 100644
+--- a/src/OVAL/probes/unix/runlevel_probe.c
++++ b/src/OVAL/probes/unix/runlevel_probe.c
+@@ -403,6 +403,11 @@ static int is_wrlinux(void)
+ 	return parse_os_release("cpe:/o:windriver:wrlinux");
+ }
+ 
++static int is_openembedded(void)
++{
++	return parse_os_release("cpe:/o:openembedded:nodistro");
++}
++
+ static int is_common (void)
+ {
+         return (1);
+@@ -424,7 +429,8 @@ const distro_tbl_t distro_tbl[] = {
+         { &is_suse,     &get_runlevel_suse     },
+         { &is_solaris,  &get_runlevel_redhat   },
+         { &is_wrlinux,  &get_runlevel_wrlinux  },
+-        { &is_common,   &get_runlevel_common   }
++        { &is_common,   &get_runlevel_common   },
++        { &is_openembedded,  &get_runlevel_common  }
+ };
+ 
+ #define DISTRO_TBL_SIZE ((sizeof distro_tbl)/sizeof (distro_tbl_t))
+-- 
+2.25.1
+
