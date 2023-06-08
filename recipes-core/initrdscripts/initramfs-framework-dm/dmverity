@@ -14,7 +14,7 @@ dmverity_run() {
     C=0
     delay=${bootparam_rootdelay:-1}
     timeout=${bootparam_roottimeout:-5}
-    RDEV="$(realpath /dev/disk/by-partuuid/${bootparam_root#PARTUUID=})"
+    RDEV="$(realpath /dev/disk/by-partuuid/${bootparam_root#PARTUUID=} 2>/dev/null)"
     while [ ! -b "${RDEV}" ]; do
         if [ $(( $C * $delay )) -gt $timeout ]; then
             fatal "Root device resolution failed"
@@ -23,22 +23,22 @@ dmverity_run() {
 
         case "${bootparam_root}" in
             ID=*)
-                RDEV="$(realpath /dev/disk/by-id/${bootparam_root#ID=})"
+                RDEV="$(realpath /dev/disk/by-id/${bootparam_root#ID=} 2>/dev/null)"
                 ;;
             LABEL=*)
-                RDEV="$(realpath /dev/disk/by-label/${bootparam_root#LABEL=})"
+                RDEV="$(realpath /dev/disk/by-label/${bootparam_root#LABEL=} 2>/dev/null)"
                 ;;
             PARTLABEL=*)
-                RDEV="$(realpath /dev/disk/by-partlabel/${bootparam_root#PARTLABEL=})"
+                RDEV="$(realpath /dev/disk/by-partlabel/${bootparam_root#PARTLABEL=} 2>/dev/null)"
                 ;;
             PARTUUID=*)
-                RDEV="$(realpath /dev/disk/by-partuuid/${bootparam_root#PARTUUID=})"
+                RDEV="$(realpath /dev/disk/by-partuuid/${bootparam_root#PARTUUID=} 2>/dev/null)"
                 ;;
             PATH=*)
-                RDEV="$(realpath /dev/disk/by-path/${bootparam_root#PATH=})"
+                RDEV="$(realpath /dev/disk/by-path/${bootparam_root#PATH=} 2>/dev/null)"
                 ;;
             UUID=*)
-                RDEV="$(realpath /dev/disk/by-uuid/${bootparam_root#UUID=})"
+                RDEV="$(realpath /dev/disk/by-uuid/${bootparam_root#UUID=} 2>/dev/null)"
                 ;;
             *)
                 RDEV="${bootparam_root}"
