@@ -12,6 +12,7 @@ PACKAGES = "\
     packagegroup-security-audit \
     packagegroup-security-ids  \
     packagegroup-security-mac  \
+    packagegroup-security-compliance  \
     ${@bb.utils.contains("DISTRO_FEATURES", "ptest", "packagegroup-meta-security-ptest-packages", "", d)} \
     "
 
@@ -90,6 +91,13 @@ RDEPENDS:packagegroup-security-mac = " \
     "
 
 RDEPENDS:packagegroup-security-mac:remove:mipsarch = "apparmor"
+
+SUMMARY:packagegroup-security-compliance = "Security Compliance applications"
+RDEPENDS:packagegroup-security-compliance = " \
+    lynis \
+    openscap \
+    scap-security-guide \
+    "
 
 RDEPENDS:packagegroup-meta-security-ptest-packages = "\
     ptest-runner \
