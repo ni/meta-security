@@ -9,11 +9,9 @@ LICENSE = "LGPL-2.1-only"
 DEPENDS = "dbus acl bzip2 pkgconfig gconf procps curl libxml2 libxslt libcap swig libpcre  xmlsec1"
 DEPENDS:class-native = "pkgconfig-native swig-native curl-native libxml2-native libxslt-native libcap-native libpcre-native xmlsec1-native"
 
-
-SRCREV = "55efbfda0f617e05862ab6ed4862e10dbee52b03"
+#Jun 20th, 2023
+SRCREV = "c99fc854ff566fac9d130622fe9fd434484eb13d"
 SRC_URI = "git://github.com/OpenSCAP/openscap.git;branch=maint-1.3;protocol=https \
-           file://0001-openscap-Add-openembedded.patch  \
-           file://0002-openembedded-add-Poky-distro.patch \
            "
 
 S = "${WORKDIR}/git"
