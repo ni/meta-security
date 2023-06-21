@@ -8,7 +8,10 @@ LICENSE = "BSD-3-Clause"
 
 SRCREV = "dad85502ce8da722a6afc391346c41cee61e90a9"
 SRC_URI = "git://github.com/ComplianceAsCode/content.git;branch=master;protocol=https \
-           file://0001-scap-security-guide-add-openembedded.patch "
+           file://0001-scap-security-guide-add-openembedded.patch \
+           file://0001-standard.profile-expand-checks.patch \
+           file://run_eval.sh \
+           "
 
 
 DEPENDS = "openscap-native python3-pyyaml-native python3-jinja2-native libxml2-native expat-native coreutils-native"
@@ -29,6 +32,11 @@ do_configure:prepend () {
     sed -i -e 's:NAMES\ grep:NAMES\ ${HOSTTOOLS_DIR}/grep:g' ${S}/CMakeLists.txt
 }
 
-FILES:${PN} += "${datadir}/xml"
+do_install:append() {
+    install -d ${D}${datadir}/openscap
+    install  ${WORKDIR}/run_eval.sh ${D}${datadir}/openscap/.
+}
+
+FILES:${PN} += "${datadir}/xml ${datadir}/openscap"
 
 RDEPENDS:${PN} = "openscap"
