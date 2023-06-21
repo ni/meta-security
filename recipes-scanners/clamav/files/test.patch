@@ -1,3 +1,5 @@
+Upstream-Status: Pending
+
 Index: clamav-0.103.0/Makefile.am
 ===================================================================
 --- clamav-0.103.0.orig/Makefile.am

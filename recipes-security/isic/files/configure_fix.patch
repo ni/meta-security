@@ -1,3 +1,5 @@
+Upstream-Status: Pending
+
 isic: add with-libnet remove libnet test
 
 Inappropriate - builds fine on non-oe systems. We need to exlude
