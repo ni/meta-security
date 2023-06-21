@@ -58,6 +58,7 @@ verity_setup() {
     local INPUT=${IMAGE_NAME}${IMAGE_NAME_SUFFIX}.$TYPE
     local SIZE=$(stat --printf="%s" $INPUT)
     local OUTPUT=$INPUT.verity
+    local SETUP_ARGS=""
 
     if [ ${DM_VERITY_IMAGE_DATA_BLOCK_SIZE} -ge ${DM_VERITY_IMAGE_HASH_BLOCK_SIZE} ]; then
         align=${DM_VERITY_IMAGE_DATA_BLOCK_SIZE}
@@ -68,9 +69,15 @@ verity_setup() {
 
     cp -a $INPUT $OUTPUT
 
+    SETUP_ARGS=" \
+        --data-block-size=${DM_VERITY_IMAGE_DATA_BLOCK_SIZE} \
+        --hash-block-size=${DM_VERITY_IMAGE_HASH_BLOCK_SIZE} \
+        --hash-offset=$SIZE format $OUTPUT $OUTPUT \
+    "
+
     # Let's drop the first line of output (doesn't contain any useful info)
     # and feed the rest to another function.
-    veritysetup --data-block-size=${DM_VERITY_IMAGE_DATA_BLOCK_SIZE} --hash-block-size=${DM_VERITY_IMAGE_HASH_BLOCK_SIZE} --hash-offset=$SIZE format $OUTPUT $OUTPUT | tail -n +2 | process_verity
+    veritysetup $SETUP_ARGS | tail -n +2 | process_verity
 }
 
 VERITY_TYPES = " \
