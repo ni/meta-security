@@ -8,12 +8,41 @@ dmverity_run() {
     DATA_SIZE="__not_set__"
     DATA_BLOCK_SIZE="__not_set__"
     ROOT_HASH="__not_set__"
+    SEPARATE_HASH="__not_set__"
 
     . /usr/share/misc/dm-verity.env
 
     C=0
     delay=${bootparam_rootdelay:-1}
     timeout=${bootparam_roottimeout:-5}
+
+    # we know exactly what we are looking for; don't need the wide hunt below
+    if [ "${SEPARATE_HASH}" -eq "1" ]; then
+        while [ ! -b "/dev/disk/by-partuuid/${ROOT_UUID}" ]; do
+            if [ $(( $C * $delay )) -gt $timeout ]; then
+                fatal "Root device (data) resolution failed"
+                exit 1
+            fi
+            debug "Sleeping for $delay second(s) to wait for root data to settle..."
+            sleep $delay
+            C=$(( $C + 1 ))
+        done
+
+        veritysetup \
+            --data-block-size=${DATA_BLOCK_SIZE} \
+            create rootfs \
+            /dev/disk/by-partuuid/${ROOT_UUID} \
+            /dev/disk/by-partuuid/${RHASH_UUID} \
+            ${ROOT_HASH}
+
+            mount \
+                 -o ro \
+                /dev/mapper/rootfs \
+                ${ROOTFS_DIR} || exit 2
+
+	    return
+    fi
+
     RDEV="$(realpath /dev/disk/by-partuuid/${bootparam_root#PARTUUID=} 2>/dev/null)"
     while [ ! -b "${RDEV}" ]; do
         if [ $(( $C * $delay )) -gt $timeout ]; then
