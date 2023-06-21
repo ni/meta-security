@@ -34,7 +34,6 @@ DM_VERITY_IMAGE_HASH_BLOCK_SIZE ?= "4096"
 # any useful info) and feed the rest to a script.
 process_verity() {
     local ENV="${STAGING_VERITY_DIR}/${IMAGE_BASENAME}.$TYPE.verity.env"
-    install -d ${STAGING_VERITY_DIR}
     rm -f $ENV
 
     # Each line contains a key and a value string delimited by ':'. Read the
@@ -59,6 +58,9 @@ verity_setup() {
     local SIZE=$(stat --printf="%s" $INPUT)
     local OUTPUT=$INPUT.verity
     local SETUP_ARGS=""
+    local SAVED_ARGS="${STAGING_VERITY_DIR}/${IMAGE_BASENAME}.$TYPE.verity.args"
+
+    install -d ${STAGING_VERITY_DIR}
 
     if [ ${DM_VERITY_IMAGE_DATA_BLOCK_SIZE} -ge ${DM_VERITY_IMAGE_HASH_BLOCK_SIZE} ]; then
         align=${DM_VERITY_IMAGE_DATA_BLOCK_SIZE}
@@ -74,6 +76,8 @@ verity_setup() {
         --hash-block-size=${DM_VERITY_IMAGE_HASH_BLOCK_SIZE} \
         --hash-offset=$SIZE format $OUTPUT $OUTPUT \
     "
+
+    echo "veritysetup $SETUP_ARGS" > $SAVED_ARGS
 
     # Let's drop the first line of output (doesn't contain any useful info)
     # and feed the rest to another function.
