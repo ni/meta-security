@@ -18,6 +18,13 @@
 #     DM_VERITY_IMAGE_TYPE = "ext4" # or ext2, ext3 & btrfs
 #     DM_VERITY_SEPARATE_HASH = "1" # optional; store hash on separate dev
 #     IMAGE_CLASSES += "dm-verity-img"
+#
+# Using the GPT UUIDs specified in the standard can also be useful in that
+# they are displayed and translated in cfdisk output.
+#
+#     DM_VERITY_ROOT_GUID = <UUID for your architecture and root-fs>
+#     DM_VERITY_RHASH_GUID = <UUID for your architecture and verity-hash>
+# https://uapi-group.org/specifications/specs/discoverable_partitions_specification/
 
 # The resulting image can then be used to implement the device mapper block
 # integrity checking on the target device.
@@ -35,12 +42,20 @@ DM_VERITY_IMAGE_HASH_BLOCK_SIZE ?= "4096"
 # Should we store the hash data on a separate device/partition?
 DM_VERITY_SEPARATE_HASH ?= "0"
 
+# These are arch specific.  We could probably intelligently auto-assign these?
+# Take x86-64 values as defaults. No impact on functionality currently.
+# See SD_GPT_ROOT_X86_64 and SD_GPT_ROOT_X86_64_VERITY in the spec.
+# Note - these are passed directly to sgdisk so hyphens needed.
+DM_VERITY_ROOT_GUID ?= "4f68bce3-e8cd-4db1-96e7-fbcaf984b709"
+DM_VERITY_RHASH_GUID ?= "2c7357ed-ebd2-46d9-aec1-23d437ec2bf5"
+
 # Process the output from veritysetup and generate the corresponding .env
 # file. The output from veritysetup is not very machine-friendly so we need to
 # convert it to some better format. Let's drop the first line (doesn't contain
 # any useful info) and feed the rest to a script.
 process_verity() {
     local ENV="${STAGING_VERITY_DIR}/${IMAGE_BASENAME}.$TYPE.verity.env"
+    local WKS_INC="${STAGING_VERITY_DIR}/${IMAGE_BASENAME}.$TYPE.wks.in"
     rm -f $ENV
 
     # Each line contains a key and a value string delimited by ':'. Read the
@@ -86,6 +101,14 @@ process_verity() {
     # Emit the values needed for a veritysetup run in the initramfs
     echo "ROOT_UUID=$ROOT_UUID" >> $ENV
     echo "RHASH_UUID=$RHASH_UUID" >> $ENV
+
+    # Create wks.in fragment with build specific UUIDs for partitions.
+    # Unfortunately the wks.in does not support line continuations...
+    # First, the unappended filesystem data partition.
+    echo 'part / --source rawcopy --ondisk sda --sourceparams="file=${IMGDEPLOYDIR}/${DM_VERITY_IMAGE}-${MACHINE}.${DM_VERITY_IMAGE_TYPE}.verity" --part-name verityroot --part-type="${DM_VERITY_ROOT_GUID}"'" --uuid=\"$ROOT_UUID\"" > $WKS_INC
+
+    # note: no default mount point for hash data partition
+    echo 'part --source rawcopy --ondisk sda --sourceparams="file=${IMGDEPLOYDIR}/${DM_VERITY_IMAGE}-${MACHINE}.${DM_VERITY_IMAGE_TYPE}.vhash" --part-name verityhash --part-type="${DM_VERITY_RHASH_GUID}"'" --uuid=\"$RHASH_UUID\"" >> $WKS_INC
 }
 
 verity_setup() {
