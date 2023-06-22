@@ -4,6 +4,8 @@ Date: Wed, 21 Jun 2023 07:46:38 -0400
 Subject: [PATCH] standard.profile: expand checks
 
 Signed-off-by: Armin Kuster <akuster808@gmail.com>
+
+Upstream-status: Pending
 ---
  .../openembedded/profiles/standard.profile    | 206 ++++++++++++++++++
  1 file changed, 206 insertions(+)
