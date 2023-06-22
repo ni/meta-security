@@ -5,6 +5,7 @@ Subject: [PATCH] To fix build error of xrange.
 
 NameError: name 'xrange' is not defined
 
+Upstream-Status: Pending
 Signed-off-by: Lei Maohui <leimaohui@cn.fujitsu.com>
 ---
  fail2ban/__init__.py | 2 +-
