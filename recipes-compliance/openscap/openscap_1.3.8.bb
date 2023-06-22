@@ -9,8 +9,8 @@ LICENSE = "LGPL-2.1-only"
 DEPENDS = "dbus acl bzip2 pkgconfig gconf procps curl libxml2 libxslt libcap swig libpcre  xmlsec1"
 DEPENDS:class-native = "pkgconfig-native swig-native curl-native libxml2-native libxslt-native libcap-native libpcre-native xmlsec1-native"
 
-#Jun 20th, 2023
-SRCREV = "c99fc854ff566fac9d130622fe9fd434484eb13d"
+#Jun 22th, 2023
+SRCREV = "a81c66d9bc36612dd1ca83a8c959a59e172eb4b9"
 SRC_URI = "git://github.com/OpenSCAP/openscap.git;branch=maint-1.3;protocol=https \
            "
 
@@ -25,6 +25,7 @@ PACKAGECONFIG[rpm] = "-DENABLE_OSCAP_UTIL_AS_RPM=ON, ,rpm, rpm"
 PACKAGECONFIG[gcrypt] = "-DWITH_CRYPTO=gcrypt, ,libgcrypt"
 PACKAGECONFIG[nss3] = "-DWITH_CRYPTO=nss3, ,nss"
 PACKAGECONFIG[selinux] = ", ,libselinux"
+PACKAGECONFIG[remdediate_service] = "-DENABLE_OSCAP_REMEDIATE_SERVICE=ON,-DENABLE_OSCAP_REMEDIATE_SERVICE=NO,"
 
 EXTRA_OECMAKE += "-DENABLE_PROBES_LINUX=ON -DENABLE_PROBES_UNIX=ON \
                   -DENABLE_PROBES_SOLARIS=OFF -DENABLE_PROBES_INDEPENDENT=ON \
@@ -47,7 +48,9 @@ do_configure:append:class-native () {
 
 do_install:append () {
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
-        install -D -m 0644 ${B}/oscap-remediate.service ${D}${systemd_system_unitdir}/oscap-remediate.service
+        if ${@bb.utils.contains('PACKAGECONFIG','remdediate_service','true','false',d)}; then
+            install -D -m 0644 ${B}/oscap-remediate.service ${D}${systemd_system_unitdir}/oscap-remediate.service
+        fi
     fi
 }
 
@@ -60,7 +63,9 @@ do_install:append:class-native () {
 
 
 SYSTEMD_PACKAGES = "${PN}"
-SYSTEMD_SERVICE:${PN} = "oscap-remediate.service"
+SYSTEMD_SERVICE:${PN} = "${@bb.utils.contains('PACKAGECONFIG','remdediate_service', 'oscap-remediate.service', '',d)}"
+SYSTEMD_AUTO_ENABLE = "disable"
+
 
 FILES:${PN} += "${PYTHON_SITEPACKAGES_DIR}"
 
