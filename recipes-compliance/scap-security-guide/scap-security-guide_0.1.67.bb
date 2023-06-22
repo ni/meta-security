@@ -41,3 +41,5 @@ do_install:append() {
 FILES:${PN} += "${datadir}/xml ${datadir}/openscap"
 
 RDEPENDS:${PN} = "openscap"
+
+COMPATIBLE_HOST:libc-musl = "null"
