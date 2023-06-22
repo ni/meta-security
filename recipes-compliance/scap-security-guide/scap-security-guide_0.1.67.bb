@@ -10,6 +10,7 @@ SRCREV = "dad85502ce8da722a6afc391346c41cee61e90a9"
 SRC_URI = "git://github.com/ComplianceAsCode/content.git;branch=master;protocol=https \
            file://0001-scap-security-guide-add-openembedded.patch \
            file://0001-standard.profile-expand-checks.patch \
+           file://0001-scap-security-guide-add-Poky-support.patch \
            file://run_eval.sh \
            "
 
