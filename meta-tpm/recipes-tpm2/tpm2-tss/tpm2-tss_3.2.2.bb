@@ -88,3 +88,6 @@ FILES:${PN} = "\
     ${sysconfdir}/sysusers.d"
 
 RDEPENDS:libtss2 = "libgcrypt"
+
+# This is patched in 3.2.2, NVD DB was not updated to reflect this backport
+CVE_CHECK_IGNORE += "CVE-2023-22745"
