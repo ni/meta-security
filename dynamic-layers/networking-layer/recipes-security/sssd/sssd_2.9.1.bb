@@ -16,7 +16,7 @@ DEPENDS:append:libc-musl = " musl-nscd"
 DEPENDS += "${@bb.utils.contains('PACKAGECONFIG', 'nss', '', \
                bb.utils.contains('PACKAGECONFIG', 'crypto', '', 'nss', d), d)}"
 
-SRC_URI = "https://github.com/SSSD/sssd/releases/download/${PV}/sssd-${PV}.tar.gz \
+SRC_URI = "https://github.com/SSSD/sssd/releases/download/${PV}/${BP}.tar.gz \
            file://sssd.conf \
            file://volatiles.99_sssd \
            file://no_gen.patch \
@@ -24,9 +24,10 @@ SRC_URI = "https://github.com/SSSD/sssd/releases/download/${PV}/sssd-${PV}.tar.g
            file://drop_ntpdate_chk.patch \
            file://fix-ldblibdir.patch \
            file://musl_fixup.patch \
+           file://0001-sssctl-add-error-analyzer.patch \
            "
 
-SRC_URI[sha256sum] = "10ef90c63fdbfda905145077679035bd5ad16b24daad13160de8d0ff82ea9950"
+SRC_URI[sha256sum] = "97703d38159994a869aad1c852de4582c76f189cf044f51e15ba26e1e4b75298"
 
 UPSTREAM_CHECK_URI = "https://github.com/SSSD/${BPN}/releases"
 
@@ -58,7 +59,7 @@ PACKAGECONFIG[samba] = "--with-samba, --with-samba=no, samba"
 PACKAGECONFIG[selinux] = "--with-selinux, --with-selinux=no --with-semanage=no, libselinux"
 PACKAGECONFIG[ssh] = "--with-ssh, --with-ssh=no, "
 PACKAGECONFIG[sudo] = "--with-sudo, --with-sudo=no, "
-PACKAGECONFIG[systemd] = "--with-initscript=systemd,--with-initscript=sysv"
+PACKAGECONFIG[systemd] = "--with-initscript=systemd,--with-initscript=sysv,,python3-systemd"
 
 EXTRA_OECONF += " \
     --disable-cifs-idmap-plugin \
@@ -146,6 +147,7 @@ ALLOW_EMPTY:libsss-sudo = "1"
 
 FILES:${PN} += "${base_libdir}/security/pam_sss*.so  \
                 ${nonarch_libdir}/tmpfiles.d \
+                ${datadir}/dbus-1/system.d/*.conf \
                 ${datadir}/dbus-1/system-services/*.service \
                 ${libdir}/krb5/* \
                 ${libdir}/ldb/* \
