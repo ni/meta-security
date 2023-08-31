@@ -6,11 +6,10 @@ HOME_URL = "https://www.open-scap.org/security-policies/scap-security-guide/"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=9bfa86579213cb4c6adaffface6b2820"
 LICENSE = "BSD-3-Clause"
 
-SRCREV = "3a1012bc9ec2b01b3b71c6feefd3cff0f52bd64d"
+SRCREV = "d09e81ae00509a9be4b01359166cfbece06e47f4"
 SRC_URI = "git://github.com/ComplianceAsCode/content.git;branch=master;protocol=https \
            file://run_eval.sh \
            file://run-ptest \
-           file://0001-scap-security-guide-add-openembedded-distro-support.patch \
            file://0002-scap-security-guide-Add-Poky-support.patch \
            "
 
@@ -29,7 +28,7 @@ export OSCAP_XSLT_PATH="${STAGING_OSCAP_BUILDDIR}${datadir_native}/openscap/xsl"
 
 OECMAKE_GENERATOR = "Unix Makefiles"
 
-EXTRA_OECMAKE += "-DENABLE_PYTHON_COVERAGE=OFF -DSSG_PRODUCT_DEFAULT=OFF -DSSG_PRODUCT_OE=ON"
+EXTRA_OECMAKE += "-DENABLE_PYTHON_COVERAGE=OFF -DSSG_PRODUCT_DEFAULT=OFF -DSSG_PRODUCT_OPENEMBEDDED=ON"
 
 do_configure[depends] += "openscap-native:do_install"
 
