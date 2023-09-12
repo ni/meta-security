@@ -30,7 +30,8 @@ EXTRA_OECONF += " --disable-debug \
     "
 
 CARGO_SRC_DIR = "rust"
-#CARGO_LOCK_SRC_DIR = "${S}/rust"
+CARGO_BUILD_FLAGS:remove = "--frozen"
+CARGO_BUILD_FLAGS:append = " --offline"
 
 B = "${S}"
 
