@@ -26,8 +26,7 @@ SRC_URI = "https://github.com/SSSD/sssd/releases/download/${PV}/${BP}.tar.gz \
            file://musl_fixup.patch \
            file://0001-sssctl-add-error-analyzer.patch \
            "
-
-SRC_URI[sha256sum] = "97703d38159994a869aad1c852de4582c76f189cf044f51e15ba26e1e4b75298"
+SRC_URI[sha256sum] = "827bc65d64132410e6dd3df003f04829d60387ec30e72b2d4e22d93bb6f762ba"
 
 UPSTREAM_CHECK_URI = "https://github.com/SSSD/${BPN}/releases"
 
@@ -81,6 +80,7 @@ do_configure:prepend() {
 }
 
 do_compile:prepend () {
+     sed -i -e "s/__useconds_t/useconds_t/g" ${S}/src/tools/tools_mc_util.c
      echo '#define NSUPDATE_PATH "${bindir}"' >> ${B}/config.h
 }
 do_install () {
