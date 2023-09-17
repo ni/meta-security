@@ -10,7 +10,7 @@ SRC_URI = "https://cisofy.com/files/${BPN}-${PV}.tar.gz \
            file://0001-osdetection-add-OpenEmbedded-and-Poky.patch \
           "
 
-SRC_URI[sha256sum] = "98373a4cc9d0471ab9bebb249e442fcf94b6bf6d4e9c6fc0b22bca1506646c63"
+SRC_URI[sha256sum] = "f394df7d20391fb76e975ae88f3eba1da05ac9c4945e2c7f709326e185e17025"
 
 S = "${WORKDIR}/${BPN}"
 
