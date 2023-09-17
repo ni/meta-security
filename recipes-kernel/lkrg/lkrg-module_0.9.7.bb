@@ -5,13 +5,13 @@ SECTION = "security"
 HOMEPAGE = "https://www.openwall.com/lkrg/"
 LICENSE = "GPL-2.0-only"
 
-LIC_FILES_CHKSUM = "file://LICENSE;md5=3f3e5dd56319d33a1944d635c1c86c6f"
+LIC_FILES_CHKSUM = "file://LICENSE;md5=57534ed9f03a5810945cd9be4a81db41"
 
 DEPENDS = "virtual/kernel elfutils"
 
 SRC_URI = "git://github.com/lkrg-org/lkrg.git;protocol=https;branch=main"
 
-SRCREV = "2481b3e2dd04eac945c31f99058b0aeee73c3a71"
+SRCREV = "5dc5cfea1f4dc8febdd5274d99e277c17df06acc"
 
 S = "${WORKDIR}/git"
 
