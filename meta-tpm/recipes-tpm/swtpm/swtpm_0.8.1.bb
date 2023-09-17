@@ -6,9 +6,8 @@ SECTION = "apps"
 # expect-native, socat-native, coreutils-native and net-tools-native are reportedly only required for the tests
 DEPENDS = "libtasn1 coreutils-native expect-native socat-native glib-2.0 net-tools-native libtpm json-glib"
 
-SRCREV = "2ae7b019370760e17f4f2675195a91ca53950eda"
-SRC_URI = "git://github.com/stefanberger/swtpm.git;branch=master;protocol=https \
-           "
+SRCREV = "d2849a9f5ced70438d67036693438344b47b4161"
+SRC_URI = "git://github.com/stefanberger/swtpm.git;branch=stable-0.8;protocol=https"
 PE = "1"
 
 S = "${WORKDIR}/git"
