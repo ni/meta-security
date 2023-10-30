@@ -12,7 +12,7 @@ SRC_URI += "crate://crates.io/parsec-service/${PV} \
             file://systemd.patch \
             file://parsec-tmpfiles.conf \
 "
-SRC_URI[parsec-service-1.2.0.sha256sum] = "f58e7ba859c22cc1904dc8298b1a7d94ee1ba3b4d4808f28e4cc0c96ddb149c9"
+SRC_URI[parsec-service-1.3.0.sha256sum] = "6e171f6394f900e0356947fb7ee42f825fba7ad8cada44b520b4bec5f1c853c8"
 
 B = "${CARGO_VENDORING_DIRECTORY}/${BP}"
 

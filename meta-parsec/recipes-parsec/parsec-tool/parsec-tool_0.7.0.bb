@@ -7,7 +7,7 @@ inherit cargo cargo-update-recipe-crates
 
 SRC_URI += "crate://crates.io/parsec-tool/${PV} \
 "
-SRC_URI[parsec-tool-0.6.0.sha256sum] = "f51d5d7f0caca1c335324b52482fa5edbf6c9cfd2e6865e5cb22716d52dcb367"
+SRC_URI[parsec-tool-0.7.0.sha256sum] = "76afb4416d04c5af9f81285dfff390b09c6926aabd6b4ee20dc07470a9698732"
 
 B = "${CARGO_VENDORING_DIRECTORY}/${BP}"
 
