@@ -18,14 +18,14 @@ LIC_FILES_CHKSUM = "file://COPYING;md5=56871e72a5c475289c0d5e4ba3f2ee3a \
                     file://src/g_accept_sec_context.c;beginline=3;endline=23;md5=da8ca7a37bd26e576c23874d453751d2\
                     file://src/g_ccache_name.c;beginline=1;endline=32;md5=208d4de05d5c8273963a8332f084faa7 \
                     file://src/oid_ops.c;beginline=1;endline=26;md5=1f194d148b396972da26759a8ec399f0\
-                    file://src/oid_ops.c;beginline=378;endline=398;md5=d77a5c03e91908fac453c08bbeaddce1\
+                    file://src/oid_ops.c;beginline=378;endline=398;md5=72457a5cdc0354cb5c25c8b150326364\
 "
 
 SRC_URI = "${DEBIAN_MIRROR}/main/libg/${BPN}/${BPN}_${PV}.orig.tar.gz \
            file://libgssglue-canon-name.patch  \
 "
 
-SRC_URI[sha256sum] = "bcd618ae0bc69f12815d77295658a760e7edc20706b9a731a81da8993f5c970a"
+SRC_URI[sha256sum] = "a2bb183e946f6e30562a2a856950a2916c9b6d42c34d67a8400e4efc28917746"
 
 inherit autotools-brokensep
 
