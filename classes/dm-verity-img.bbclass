@@ -115,7 +115,7 @@ process_verity() {
 
 verity_setup() {
     local TYPE=$1
-    local INPUT=${IMAGE_NAME}${IMAGE_NAME_SUFFIX}.$TYPE
+    local INPUT=${IMAGE_NAME}.$TYPE
     local SIZE=$(stat --printf="%s" $INPUT)
     local OUTPUT=$INPUT.verity
     local OUTPUT_HASH=$INPUT.verity
@@ -157,7 +157,7 @@ verity_setup() {
 # make "dateless" symlink for the hash so the wks can find it.
 verity_hash() {
     cd ${IMGDEPLOYDIR}
-    ln -sf ${IMAGE_NAME}${IMAGE_NAME_SUFFIX}.${DM_VERITY_IMAGE_TYPE}.vhash \
+    ln -sf ${IMAGE_NAME}.${DM_VERITY_IMAGE_TYPE}.vhash \
         ${IMAGE_BASENAME}-${MACHINE}.${DM_VERITY_IMAGE_TYPE}.vhash
 }
 
