@@ -49,6 +49,8 @@ DM_VERITY_SEPARATE_HASH ?= "0"
 DM_VERITY_ROOT_GUID ?= "4f68bce3-e8cd-4db1-96e7-fbcaf984b709"
 DM_VERITY_RHASH_GUID ?= "2c7357ed-ebd2-46d9-aec1-23d437ec2bf5"
 
+DEPENDS += "bc-native"
+
 # Process the output from veritysetup and generate the corresponding .env
 # file. The output from veritysetup is not very machine-friendly so we need to
 # convert it to some better format. Let's drop the first line (doesn't contain
@@ -87,8 +89,8 @@ process_verity() {
     # https://uapi-group.org/specifications/specs/discoverable_partitions_specification/
 
     ROOT_HASH=$(cat $ENV | grep ^ROOT_HASH | sed 's/ROOT_HASH=//' | tr a-f A-F)
-    ROOT_HI=$(echo "obase=16;ibase=16;$ROOT_HASH/2^80" | /usr/bin/bc)
-    ROOT_LO=$(echo "obase=16;ibase=16;$ROOT_HASH%2^80" | /usr/bin/bc)
+    ROOT_HI=$(echo "obase=16;ibase=16;$ROOT_HASH/2^80" | bc)
+    ROOT_LO=$(echo "obase=16;ibase=16;$ROOT_HASH%2^80" | bc)
 
     # Hyphenate as per UUID spec and as expected by wic+sgdisk parameters.
     # Prefix with leading zeros, in case hash chunks weren't using highest bits
