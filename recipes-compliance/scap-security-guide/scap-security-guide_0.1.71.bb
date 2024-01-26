@@ -1,4 +1,4 @@
-# Copyright (C) 2017 - 2023 Armin Kuster  <akuster808@gmail.com>
+# Copyright (C) 2017 - 2024 Armin Kuster  <akuster808@gmail.com>
 # Released under the MIT license (see COPYING.MIT for the terms)
 
 SUMARRY = "SCAP content for various platforms, upstream version"
@@ -6,8 +6,8 @@ HOME_URL = "https://www.open-scap.org/security-policies/scap-security-guide/"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=9bfa86579213cb4c6adaffface6b2820"
 LICENSE = "BSD-3-Clause"
 
-SRCREV = "da283b9a360f2f42ad642c0c9b08b061501bc667"
-SRC_URI = "git://github.com/ComplianceAsCode/content.git;branch=master;protocol=https \
+SRCREV = "459f0abf2ac08d36e5fc4a2619bc75cff7000da9"
+SRC_URI = "git://github.com/ComplianceAsCode/content.git;branch=stable;protocol=https \
            file://run_eval.sh \
            file://run-ptest \
            "
