@@ -177,6 +177,24 @@ CONVERSION_CMD:verity = "verity_setup ${type}"
 CONVERSION_DEPENDS_verity = "cryptsetup-native"
 IMAGE_CMD:vhash = "verity_hash"
 
+def get_verity_fstypes(d):
+    verity_image = d.getVar('DM_VERITY_IMAGE')
+    verity_type = d.getVar('DM_VERITY_IMAGE_TYPE')
+    verity_hash = d.getVar('DM_VERITY_SEPARATE_HASH')
+    pn = d.getVar('PN')
+
+    fstypes = ""
+    if not pn.endswith(verity_image):
+        return fstypes # This doesn't concern this image
+
+    fstypes = verity_type + ".verity"
+    if verity_hash == "1":
+        fstypes += " vhash"
+
+    return fstypes
+
+IMAGE_FSTYPES += "${@get_verity_fstypes(d)}"
+
 python __anonymous() {
     verity_image = d.getVar('DM_VERITY_IMAGE')
     verity_type = d.getVar('DM_VERITY_IMAGE_TYPE')
@@ -188,15 +206,11 @@ python __anonymous() {
         bb.warn('dm-verity-img class inherited but not used')
         return
 
-    if verity_image != pn:
+    if not pn.endswith(verity_image):
         return # This doesn't concern this image
 
     if len(verity_type.split()) != 1:
         bb.fatal('DM_VERITY_IMAGE_TYPE must contain exactly one type')
-
-    d.appendVar('IMAGE_FSTYPES', ' %s.verity' % verity_type)
-    if verity_hash == "1":
-        d.appendVar('IMAGE_FSTYPES', ' vhash')
 
     # If we're using wic: we'll have to use partition images and not the rootfs
     # source plugin so add the appropriate dependency.
