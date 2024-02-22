@@ -111,10 +111,10 @@ process_verity() {
     # Create wks.in fragment with build specific UUIDs for partitions.
     # Unfortunately the wks.in does not support line continuations...
     # First, the unappended filesystem data partition.
-    echo 'part / --source rawcopy --ondisk sda --sourceparams="file=${DM_VERITY_DEPLOY_DIR}/${DM_VERITY_IMAGE}-${MACHINE}.rootfs.${DM_VERITY_IMAGE_TYPE}.verity" --part-name verityroot --part-type="${DM_VERITY_ROOT_GUID}"'" --uuid=\"$ROOT_UUID\"" > $WKS_INC
+    echo 'part / --source rawcopy --ondisk sda --sourceparams="file=${DM_VERITY_DEPLOY_DIR}/${DM_VERITY_IMAGE}-${MACHINE}${IMAGE_NAME_SUFFIX}.${DM_VERITY_IMAGE_TYPE}.verity" --part-name verityroot --part-type="${DM_VERITY_ROOT_GUID}"'" --uuid=\"$ROOT_UUID\"" > $WKS_INC
 
     # note: no default mount point for hash data partition
-    echo 'part --source rawcopy --ondisk sda --sourceparams="file=${DM_VERITY_DEPLOY_DIR}/${DM_VERITY_IMAGE}-${MACHINE}.${DM_VERITY_IMAGE_TYPE}.vhash" --part-name verityhash --part-type="${DM_VERITY_RHASH_GUID}"'" --uuid=\"$RHASH_UUID\"" >> $WKS_INC
+    echo 'part --source rawcopy --ondisk sda --sourceparams="file=${DM_VERITY_DEPLOY_DIR}/${DM_VERITY_IMAGE}-${MACHINE}${IMAGE_NAME_SUFFIX}.${DM_VERITY_IMAGE_TYPE}.vhash" --part-name verityhash --part-type="${DM_VERITY_RHASH_GUID}"'" --uuid=\"$RHASH_UUID\"" >> $WKS_INC
 }
 
 verity_setup() {
@@ -162,7 +162,7 @@ verity_setup() {
 verity_hash() {
     cd ${IMGDEPLOYDIR}
     ln -sf ${IMAGE_NAME}.${DM_VERITY_IMAGE_TYPE}.vhash \
-        ${IMAGE_BASENAME}-${MACHINE}.${DM_VERITY_IMAGE_TYPE}.vhash
+        ${IMAGE_BASENAME}-${MACHINE}${IMAGE_NAME_SUFFIX}.${DM_VERITY_IMAGE_TYPE}.vhash
 }
 
 VERITY_TYPES = " \
