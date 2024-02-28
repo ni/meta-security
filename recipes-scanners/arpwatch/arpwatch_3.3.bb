@@ -42,6 +42,7 @@ CONFIGUREOPTS = " --build=${BUILD_SYS} \
           --infodir=${infodir} \
           --mandir=${mandir} \
           --srcdir=${S} \
+          --with-sendmail=${sbindir}/sendmail \
           "
 
 do_configure () {
