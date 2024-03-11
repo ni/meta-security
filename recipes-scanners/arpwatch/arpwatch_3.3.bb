@@ -52,7 +52,7 @@ do_configure () {
 do_install () {
     install -d ${D}${bindir}
     install -d ${D}${sbindir}
-    install -d ${D}${mandir}
+    install -d ${D}${mandir}/man8
     install -d ${D}${sysconfdir}
     install -d ${D}${sysconfdir}/default
     install -d ${D}${sysconfdir}/init.d
