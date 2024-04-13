@@ -19,13 +19,13 @@ DEPENDS = "openssl"
 SRC_URI = "git://git.code.sf.net/p/ibmswtpm2/tpm2;protocol=https;branch=master \
            file://tune-makefile.patch \
            "
-SRCREV = "5452af422edeff70fcae8ea99dd28a0922051d7b"
+SRCREV = "c37c74438429e1d5fe465232e7bf894b239a2cd4"
 
-UPSTREAM_CHECK_URI = "https://git.code.sf.net/p/ibmswtpm2/tpm2"
+UPSTREAM_CHECK_GITTAGREGEX = "rev(?P<pver>\d+(\-\d+)+)"
 
 S = "${WORKDIR}/git/src"
 
-CFLAGS += "-Wno-error=maybe-uninitialized -DALG_CAMELLIA=ALG_NO"
+CFLAGS += "-Wno-error=maybe-uninitialized"
 
 do_compile () {
    make CC='${CC}'
