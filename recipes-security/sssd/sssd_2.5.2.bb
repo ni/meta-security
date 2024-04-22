@@ -24,6 +24,7 @@ SRC_URI = "https://github.com/SSSD/sssd/releases/download/${PV}/sssd-${PV}.tar.g
            file://fix-ldblibdir.patch \
            file://musl_fixup.patch \
            file://CVE-2021-3621.patch \
+           file://CVE-2023-3758.patch \
            "
 
 SRC_URI[sha256sum] = "5e21b3c7b4a2f1063d0fbdd3216d29886b6eaba153b44fb5961698367f399a0f"
