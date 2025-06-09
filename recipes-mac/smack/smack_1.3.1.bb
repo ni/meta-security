@@ -13,10 +13,9 @@ SRC_URI = " \
 
 PV = "1.3.1"
 
-# CVE-2014-0363, CVE-2014-0364, CVE-2016-10027 is valnerble for other product.
-CVE_CHECK_IGNORE += "CVE-2014-0363"
-CVE_CHECK_IGNORE += "CVE-2014-0364"
-CVE_CHECK_IGNORE += "CVE-2016-10027"
+CVE_STATUS[CVE-2014-0363] = "not-applicable-config: CVE not for smack of smack-team, but other project."
+CVE_STATUS[CVE-2014-0364] = "not-applicable-config: CVE not for smack of smack-team, but other project."
+CVE_STATUS[CVE-2016-10027] = "not-applicable-config: CVE not for smack of smack-team, but other project"
 
 inherit autotools update-rc.d pkgconfig ptest
 inherit ${@bb.utils.contains('VIRTUAL-RUNTIME_init_manager','systemd','systemd','', d)}
