@@ -25,6 +25,9 @@ SRC_URI = "git://github.com/Cisco-Talos/clamav;branch=rel/1.4;protocol=https \
 # ClamAV version 1.4.3
 SRCREV = "d8b053865fd5995f7af98bfbcd98c9a5644bfe2b"
 
+# Scarthgap requires explicit S variable for git sources 
+S = "${WORKDIR}/git"
+
 COMPATIBLE_HOST:libc-musl:class-target = "null"
 
 LEAD_SONAME = "libclamav.so"
@@ -100,9 +103,9 @@ do_install:append() {
     install -d ${D}/${localstatedir}/lib/clamav
     install -d ${D}${sysconfdir}/clamav ${D}${sysconfdir}/default/volatiles
 
-    install -m 644 ${UNPACKDIR}/clamd.conf ${D}${sysconfdir}
-    install -m 644 ${UNPACKDIR}/freshclam.conf ${D}${sysconfdir}
-    install -m 0644 ${UNPACKDIR}/volatiles.03_clamav  ${D}${sysconfdir}/default/volatiles/03_clamav
+    install -m 644 ${WORKDIR}/clamd.conf ${D}${sysconfdir}
+    install -m 644 ${WORKDIR}/freshclam.conf ${D}${sysconfdir}
+    install -m 0644 ${WORKDIR}/volatiles.03_clamav  ${D}${sysconfdir}/default/volatiles/03_clamav
 
     if [ -d ${D}${prefix}/etc ]; then
         cp -r ${D}${prefix}/etc/* ${D}${sysconfdir}/ 2>/dev/null || true
@@ -126,7 +129,7 @@ do_install:append() {
 
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)};then
         install -d ${D}${sysconfdir}/tmpfiles.d
-        install -m 0644 ${UNPACKDIR}/tmpfiles.clamav ${D}${sysconfdir}/tmpfiles.d/clamav.conf
+        install -m 0644 ${WORKDIR}/tmpfiles.clamav ${D}${sysconfdir}/tmpfiles.d/clamav.conf
     fi
     oe_multilib_header clamav-types.h
 }
