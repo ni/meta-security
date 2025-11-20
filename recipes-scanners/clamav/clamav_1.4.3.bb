@@ -65,6 +65,7 @@ EXTRA_OECMAKE = "-DCMAKE_BUILD_TYPE=Release -DOPTIMIZE=ON -DENABLE_JSON_SHARED=O
                  -DCMAKE_INSTALL_SYSCONFDIR=${sysconfdir} \
                  -DCMAKE_INSTALL_FULL_SYSCONFDIR=${sysconfdir} \
                  -DSYSCONFDIR=${sysconfdir} \
+                 -DAPP_CONFIG_DIRECTORY=${sysconfdir}/clamav \
                  -DHAVE_SIGNED_RIGHT_SHIFT=1 \
                  -DHAVE_UNAME_SYSCALL=1 \
                  -DHAVE_FD_PASSING=1 \
@@ -103,8 +104,8 @@ do_install:append() {
     install -d ${D}/${localstatedir}/lib/clamav
     install -d ${D}${sysconfdir}/clamav ${D}${sysconfdir}/default/volatiles
 
-    install -m 644 ${WORKDIR}/clamd.conf ${D}${sysconfdir}
-    install -m 644 ${WORKDIR}/freshclam.conf ${D}${sysconfdir}
+    install -m 644 ${WORKDIR}/clamd.conf ${D}${sysconfdir}/clamav
+    install -m 644 ${WORKDIR}/freshclam.conf ${D}${sysconfdir}/clamav
     install -m 0644 ${WORKDIR}/volatiles.03_clamav  ${D}${sysconfdir}/default/volatiles/03_clamav
 
     if [ -d ${D}${prefix}/etc ]; then
@@ -134,13 +135,17 @@ do_install:append() {
     oe_multilib_header clamav-types.h
 }
 
-pkg_postinst:${PN} () {
-    if [ -z "$D" ]; then
-        if command -v systemd-tmpfiles >/dev/null; then
-            systemd-tmpfiles --create ${sysconfdir}/tmpfiles.d/clamav.conf
-        elif [ -e ${sysconfdir}/init.d/populate-volatile.sh ]; then
-            ${sysconfdir}/init.d/populate-volatile.sh update
-        fi
+pkg_postinst:${PN}-freshclam () {
+    if [ -n "$D" ]; then
+        return 0
+    fi
+
+    # Ensure correct ownership on directories (volatiles may not fix existing dirs)
+    if [ -d ${localstatedir}/lib/clamav ]; then
+        chown -R ${CLAMAV_USER}:${CLAMAV_GROUP} ${localstatedir}/lib/clamav
+    fi
+    if [ -d ${localstatedir}/log/clamav ]; then
+        chown -R ${CLAMAV_USER}:${CLAMAV_GROUP} ${localstatedir}/log/clamav
     fi
 }
 
@@ -159,7 +164,7 @@ FILES:${PN}-clamdscan = "${bindir}/clamdscan \
 FILES:${PN}-daemon = "${bindir}/clamconf ${bindir}/clamdtop ${sbindir}/clamd \
                       ${mandir}/man1/clamconf* ${mandir}/man1/clamdtop* \
                       ${mandir}/man5/clamd* ${mandir}/man8/clamd* \
-                      ${sysconfdir}/clamd.conf* \
+                      ${sysconfdir}/clamav/clamd.conf* \
                       ${systemd_system_unitdir}/clamav-daemon/* \
                       ${docdir}/clamav-daemon/* ${sysconfdir}/clamav-daemon \
                       ${sysconfdir}/logcheck/ignore.d.server/clamav-daemon \
@@ -168,7 +173,7 @@ FILES:${PN}-daemon = "${bindir}/clamconf ${bindir}/clamdtop ${sbindir}/clamd \
                       "
 
 FILES:${PN}-freshclam = "${bindir}/freshclam \
-                         ${sysconfdir}/freshclam.conf* \
+                         ${sysconfdir}/clamav/freshclam.conf* \
                          ${sysconfdir}/clamav ${sysconfdir}/default/volatiles \
                          ${sysconfdir}/tmpfiles.d/*.conf \
                          ${localstatedir}/lib/clamav \
