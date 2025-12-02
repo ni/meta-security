@@ -13,7 +13,7 @@ repos:
 
   poky:
     url: https://git.yoctoproject.org/git/poky
-    refspec: master
+    refspec: scarthgap
     layers:
       meta:
       meta-poky:
@@ -21,7 +21,7 @@ repos:
 
   meta-openembedded:
     url: http://git.openembedded.org/meta-openembedded
-    refspec: master
+    refspec: scarthgap
     layers:
       meta-oe:
       meta-perl:
@@ -36,8 +36,8 @@ local_conf_header:
     INHERIT += "buildstats buildstats-summary buildhistory"
     INHERIT += "report-error"
     IMAGE_CLASSES += "testimage"
-    BB_NUMBER_THREADS="24"
-    BB_NUMBER_PARSE_THREADS="12"
+    BB_NUMBER_THREADS = "24"
+    BB_NUMBER_PARSE_THREADS = "12"
     BB_TASK_NICE_LEVEL = '5'
     BB_TASK_NICE_LEVEL_task-testimage = '0'
     BB_TASK_IONICE_LEVEL = '2.7'
@@ -47,6 +47,7 @@ local_conf_header:
     PACKAGE_CLASSES = "package_ipk"
 
     DISTRO_FEATURES:append = " security pam apparmor smack ima tpm tpm2"
+    DISTRO_FEATURES:remove = "ptest"
     MACHINE_FEATURES:append = " tpm tpm2"
 
   diskmon: |
@@ -59,6 +60,10 @@ local_conf_header:
     HALT,${DL_DIR},100M,1K \
     HALT,${SSTATE_DIR},100M,1K \
     HALT,/tmp,10M,1K"
+
+  dlsstate: |
+    DL_DIR = "/home/gitlab-runner/build/downloads"
+    SSTATE_DIR = "/home/gitlab-runner/build/sstate-cache"
 
 bblayers_conf_header:
   base: |

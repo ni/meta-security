@@ -5,7 +5,7 @@ require suricata.inc
 LIC_FILES_CHKSUM = "file://LICENSE;beginline=1;endline=2;md5=c70d8d3310941dcdfcd1e02800a1f548"
 
 SRC_URI = "http://www.openinfosecfoundation.org/download/suricata-${PV}.tar.gz"
-SRC_URI[sha256sum] = "7bcd1313118366451465dc3f8385a3f6aadd084ffe44dd257dda8105863bb769"
+SRC_URI[sha256sum] = "da5a591c749fed2bd986fc3b3cac25d9cfd3b453f57becf14610746999d3c5dd"
 
 DEPENDS = "lz4 libhtp"
 
@@ -15,7 +15,7 @@ SRC_URI += " \
     file://suricata.yaml \
     file://suricata.service \
     file://run-ptest \
-    file://fixup.patch \
+    file://0001-Skip-pkg-Makefile-from-using-its-own-rust-steps.patch \
     "
 
 inherit autotools pkgconfig python3native systemd ptest cargo cargo-update-recipe-crates
@@ -63,7 +63,23 @@ do_configure:prepend () {
     # use host for RUST_SURICATA_LIB_XC_DIR
     sed -i -e 's,\${host_alias},${RUST_HOST_SYS},' ${S}/configure.ac
     sed -i -e 's,libsuricata_rust.a,libsuricata.a,' ${S}/configure.ac
+    # Address build configuration written to src/build-info.h
+    sed -i -e 's,\(| sed -e '\''s/^/"/'\''\)\( |\),\1 -e '\''s#${WORKDIR}#\\.#g'\''\2,' ${S}/configure.ac
     oe_runconf
+}
+
+CFLAGS += "-Wno-error=incompatible-pointer-types"
+
+# Commit 7a2b9acef2 cargo: pass PACKAGECONFIG_CONFARGS to cargo build
+# breaks building this recipe. Providing a copy of the original function
+# Armin 2025/04/01
+#
+oe_cargo_build () {
+    export RUSTFLAGS="${RUSTFLAGS}"
+    bbnote "Using rust targets from ${RUST_TARGET_PATH}"
+    bbnote "cargo = $(which ${CARGO})"
+    bbnote "${CARGO} build ${CARGO_BUILD_FLAGS}$@"
+    "${CARGO}" build ${CARGO_BUILD_FLAGS}"$@"
 }
 
 do_compile () {
@@ -84,6 +100,8 @@ do_install () {
     install -d ${D}${sysconfdir}/suricata ${D}${sysconfdir}/default/volatiles
     install -m 0644 ${WORKDIR}/volatiles.03_suricata  ${D}${sysconfdir}/default/volatiles/03_suricata
 
+    install -m 0644 ${S}/etc/classification.config ${D}${sysconfdir}/suricata
+    install -m 0644 ${S}/etc/reference.config ${D}${sysconfdir}/suricata
     install -m 0644 ${S}/threshold.config ${D}${sysconfdir}/suricata
     install -m 0644 ${S}/suricata.yaml ${D}${sysconfdir}/suricata
 
@@ -110,14 +128,13 @@ do_install () {
 }
 
 pkg_postinst_ontarget:${PN} () {
-if command -v systemd-tmpfiles >/dev/null; then
-    systemd-tmpfiles --create ${sysconfdir}/tmpfiles.d/suricata.conf
-elif [ -e ${sysconfdir}/init.d/populate-volatile.sh ]; then
+if [ -e ${sysconfdir}/init.d/populate-volatile.sh ]; then
     ${sysconfdir}/init.d/populate-volatile.sh update
 fi
 }
 
 SYSTEMD_PACKAGES = "${PN}"
+SYSTEMD_SERVICE:${PN} = "${BPN}.service"
 
 PACKAGES =+ "${PN}-python"
 FILES:${PN} += "${systemd_unitdir} ${sysconfdir}/tmpfiles.d"

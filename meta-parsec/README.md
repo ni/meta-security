@@ -257,7 +257,6 @@ $ git config format.subjectPrefix meta-parsec][PATCH
 Now you can just do 'git send-email origin/master' to send all local patches.
 
 Maintainers:    Anton Antonov <Anton.Antonov@arm.com>
-                Armin Kuster <akuster808@gmail.com>
 
 
 License

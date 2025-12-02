@@ -13,9 +13,9 @@ SRC_URI = " \
 
 PV = "1.3.1"
 
-CVE_STATUS[CVE-2014-0363] = "not-applicable-config: CVE not for smack of smack-team, but other project."
-CVE_STATUS[CVE-2014-0364] = "not-applicable-config: CVE not for smack of smack-team, but other project."
-CVE_STATUS[CVE-2016-10027] = "not-applicable-config: CVE not for smack of smack-team, but other project"
+CVE_STATUS[CVE-2014-0363] = "cpe-incorrect: Affects Ignite Realtime Smack XMPP API"
+CVE_STATUS[CVE-2014-0364] = "cpe-incorrect: Affects Ignite Realtime Smack XMPP API"
+CVE_STATUS[CVE-2016-10027] = "cpe-incorrect: Affects Ignite Realtime Smack XMPP API"
 
 inherit autotools update-rc.d pkgconfig ptest
 inherit ${@bb.utils.contains('VIRTUAL-RUNTIME_init_manager','systemd','systemd','', d)}

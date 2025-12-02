@@ -10,7 +10,7 @@ repos:
 
   meta-clang:
     url: https://github.com/kraj/meta-clang.git
-    refspec: master
+    refspec: scarthgap
 
 local_conf_header:
   meta-parsec: |
