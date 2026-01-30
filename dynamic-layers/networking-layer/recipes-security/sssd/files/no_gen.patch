@@ -1,14 +1,20 @@
-don't run generate-sbus-code
+From 81074928bf6bf339628eb6427c44f8ad4512a431 Mon Sep 17 00:00:00 2001
+From: Armin Kuster <akuster808@gmail.com>
+Date: Tue, 18 May 2021 15:10:53 +0000
+Subject: [PATCH] don't run generate-sbus-code
 
 Upstream-Status: Inappropriate [OE Specific]
 
 Signed-off-by: Armin Kuster <akuster808@gmail.com>
+---
+ Makefile.am | 2 --
+ 1 file changed, 2 deletions(-)
 
-Index: sssd-2.7.1/Makefile.am
-===================================================================
---- sssd-2.7.1.orig/Makefile.am
-+++ sssd-2.7.1/Makefile.am
-@@ -1023,8 +1023,6 @@ generate-sbus-code:
+diff --git a/Makefile.am b/Makefile.am
+index 3477aa0..8943e8a 100644
+--- a/Makefile.am
++++ b/Makefile.am
+@@ -1036,8 +1036,6 @@ generate-sbus-code:
  
  .PHONY: generate-sbus-code
  
