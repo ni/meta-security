@@ -1,5 +1,6 @@
 SUMMARY = "Software stack for TPM2."
 DESCRIPTION = "OSS implementation of the TCG TPM2 Software Stack (TSS2) "
+HOMEPAGE = "https://github.com/tpm2-software/tpm2-tss"
 LICENSE = "BSD-2-Clause"
 LIC_FILES_CHKSUM = "file://LICENSE;md5=500b2e742befc3da00684d8a1d5fd9da"
 SECTION = "tpm"

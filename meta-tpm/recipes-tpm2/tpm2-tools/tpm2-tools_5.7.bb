@@ -1,5 +1,6 @@
 SUMMARY = "Tools for TPM2."
 DESCRIPTION = "tpm2-tools"
+HOMEPAGE = "https://github.com/tpm2-software/tpm2-tools"
 LICENSE = "BSD-3-Clause"
 LIC_FILES_CHKSUM = "file://docs/LICENSE;md5=a846608d090aa64494c45fc147cc12e3"
 SECTION = "tpm"
