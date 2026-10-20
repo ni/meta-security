@@ -94,3 +94,5 @@ FILES:${PN} = "\
     ${sysconfdir}/sysusers.d"
 
 BBCLASSEXTEND = "native nativesdk"
+
+CVE_STATUS[CVE-2024-29040] = "fixed-version: Fixed since version 4.1.0"
